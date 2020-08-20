@@ -16,14 +16,14 @@ requirements = install_reqs
 test_requirements = install_reqs
 
 setuptools.setup(
-    name="python-template",
+    name="extract",
     version="0.0.1",
-    author="author",
-    author_email="author@example.com",
-    description="a template project",
+    author="lpfloyd",
+    author_email="jeevan@arisaedo.org",
+    description="BigQuery mining repository",
     long_description=readme,
     long_description_content_type="text/markdown",
-    url="https://github.com/<organisation>/<project>",
+    url="https://github.com/reusability/extract",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",

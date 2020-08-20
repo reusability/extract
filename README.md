@@ -1,4 +1,4 @@
-# Python Template
+# BigQuery GitHub Mining
 
 # Project Setup
 1. Go to `.github/workflows` and update documents depending on the projects name, the branching structures, PRs, etc.
@@ -10,13 +10,6 @@ Download and install Python 3.7.8, if not installed yet.
 ```
 https://www.python.org/downloads/release/python-378/
 ```
-
-## Setting up the template
-1. Go to `setup.py` and change the configuration to reflect the new repository's information.
-2. Change the `Makefile` settings dependent on the configurations that are required.
-  - ensure that the venv -> `<env_name>` is added to `.gitignore`.
-  - currently -- `<env_name>` -> `venv`
-3. Add dependencies in `requirements.txt`.
 
 ## Building the Project
 1. **Recommended**: `Make venv-<os>` -- this should create the virtual environment -- see `venv-windows` and `venv-unix` in `Makefile` for more information,

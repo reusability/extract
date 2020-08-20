@@ -49,3 +49,4 @@ https://www.python.org/downloads/release/python-378/
 1. PyLint -- Linting
 2. Bandit -- AST-based Static Analysis
 3. CodeCoverage
+4. Pre-Commit -- enforce pre-commit best practice.

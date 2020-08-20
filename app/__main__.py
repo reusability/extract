@@ -4,7 +4,7 @@ from .repository import RepositoryBigQuery, generate_random_query
 
 if __name__ == "__main__":
     # init
-    repository = RepositoryBigQuery()
+    repository: RepositoryBigQuery = RepositoryBigQuery()
 
     # generate query
     query = generate_random_query()  # todo: fix

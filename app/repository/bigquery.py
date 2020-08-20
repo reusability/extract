@@ -3,7 +3,12 @@ from google.cloud import bigquery
 from .index import Repository, RepositoryEnum
 
 
-class RepositoryBigQuery(Repository):
+class ExtractProjects:
+    def get_project(self):
+        pass
+
+
+class RepositoryBigQuery(Repository, ExtractProjects):
     def __init__(self):
         super().__init__()
 

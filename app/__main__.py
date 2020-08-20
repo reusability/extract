@@ -1,22 +1,18 @@
 # __main__.py
 # used to the main files in this packageg
-from .app import App
-from .repository import RepositoryBigQuery
+from .repository import RepositoryBigQuery, generate_random_query
 
 if __name__ == '__main__':
-    App.run()
-
+    # init
     repository = RepositoryBigQuery()
-    query = """
-    SELECT name, SUM(number) as total_people
-    FROM `bigquery-public-data.usa_names.usa_1910_2013`
-    WHERE state = 'TX'
-    GROUP BY name, state
-    ORDER BY total_people DESC
-    LIMIT 20
-    """
+
+    # generate query
+    query = generate_random_query()  # todo: fix
+
+    # job
     query_job = repository.query(query)
 
+    # print
     print("The query data:")
     for row in query_job:
         # Row values can be accessed by field name or index.

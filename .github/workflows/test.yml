@@ -5,7 +5,7 @@ name: Python Template
 
 on:
   pull_request:
-    branches: [ master ]
+    branches: [ develop ]
 
 jobs:
   test:

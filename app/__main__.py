@@ -2,7 +2,7 @@
 # used to the main files in this packageg
 from .repository import RepositoryBigQuery, generate_random_query
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # init
     repository = RepositoryBigQuery()
 

@@ -5,3 +5,4 @@ google-cloud-bigquery==1.27.2
 python-dotenv==0.14.0
 jinja2==2.11.2
 python-dotenv==0.14.0
+pre-commit==2.6.0

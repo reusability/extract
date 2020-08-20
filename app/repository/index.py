@@ -20,7 +20,4 @@ class RepositoryEnum(IntEnum):
 
     @staticmethod
     def to_char(a: int):
-        return {
-            0: 'SQL Database',
-            1: 'NoSQL Database',
-        }[a]
+        return {0: "SQL Database", 1: "NoSQL Database"}[a]

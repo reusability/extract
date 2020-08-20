@@ -5,6 +5,7 @@ TAG := $(shell git describe --tags --always --dirty)
 
 init:
 	python3 setup.py install
+	pre-commit install
 
 run:
 	@python -m $(MODULE)

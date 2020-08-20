@@ -1,5 +1,6 @@
 import setuptools
 
+# open description
 with open('README.md', 'r', encoding='utf8') as readme_file:
     readme = readme_file.read()
 
@@ -32,5 +33,5 @@ setuptools.setup(
     ],
     python_requires='>=3.7',
     install_requires=requirements,
-    tests_require=test_requirements,
+    # tests_require=test_requirements,
 )

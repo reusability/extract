@@ -7,12 +7,12 @@ class RepositoryEnum(IntEnum):
     SQL = 0
     NO_SQL = 1
 
-    @staticmethod
-    def to_char(a: int):
-        return {
-            0: 'SQL Database',
-            1: 'NoSQL Database',
-        }[a]
+    # @staticmethod
+    # def to_char(a: int):
+    #     return {
+    #         0: 'SQL Database',
+    #         1: 'NoSQL Database',
+    #     }[a]
 
 
 class Repository:

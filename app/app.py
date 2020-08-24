@@ -1,13 +1,19 @@
 # app.py
-from .repository import RepositoryBigQuery
+from .repository import Repository, RepositoryConfig
 from .project import generate_random_query
+from typing import NamedTuple
 
-# todo: abstract big query from App
+
+class AppConfig(NamedTuple):
+    repository: Repository
+    repository_config: RepositoryConfig
 
 
 class App:
-    def __init__(self):
-        self.repository = RepositoryBigQuery()
+    def __init__(self, appConfig: AppConfig):
+        repository = appConfig.repository
+        repository_config = appConfig.repository_config
+        self.repository = repository(repository_config)
 
     def Run(self):
         # generate query

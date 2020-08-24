@@ -6,4 +6,4 @@ class Project:
 
 class Projects:
     def __init__(self, projects: [Project]):
-        self.projects = Project
+        self.projects: [Project] = projects

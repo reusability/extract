@@ -1,22 +1,39 @@
-# bigqeury.py
+# bigquery.py
 from google.cloud import bigquery
-from .index import Repository, RepositoryEnum
+from .index import Repository, RepositoryEnum, RepositoryConfig
+from enum import IntEnum
+from dataclasses import dataclass
 
 
-class ExtractProjects:
-    def get_project(self):
-        pass
+@dataclass
+class RepositoryBigQueryConfig(RepositoryConfig):
+    apiType: int
 
 
-class RepositoryBigQuery(Repository, ExtractProjects):
-    def __init__(self):
-        super().__init__()
+class RepositoryBigQueryEnum(IntEnum):
+    API = 0
+    STORAGE = 1
+
+    @staticmethod
+    def to_char(a: int):
+        return {0: "BigQuery API", 1: "BigQuery Storage API"}[a]
+
+
+class RepositoryBigQuery(Repository):
+    def __init__(self, config: RepositoryBigQueryConfig):
+        super().__init__(config)
 
     def _setup_client(self):
         return bigquery.Client()
 
-    def _setup_type(self):
-        return RepositoryEnum.SQL
-
     def query(self, query):
         return self.client.query(query)
+
+
+RepositoryConfigBigQueryAPI = RepositoryBigQueryConfig(
+    RepositoryBigQueryEnum.API, RepositoryEnum.SQL
+)
+
+# RepositoryConfigBigQueryStorage = RepositoryBigQueryConfig(
+#     apiType=RepositoryBigQueryEnum.STORAGE, dbType=RepositoryEnum.SQL
+# )

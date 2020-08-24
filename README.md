@@ -23,6 +23,7 @@ https://www.python.org/downloads/release/python-378/
 2. Run the `Make init` command that will initiate the `setup.py` file -- install dependencies and set's up the entire project.
 
 ## Run the Project
+- Setup your Google Cloud BigQuery API Credential
 - Add information into `Make run` to ensure that you can run application with make.
 
 ## Adding dependencies

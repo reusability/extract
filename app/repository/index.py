@@ -1,17 +1,11 @@
-# repository.py
+# index.py
 from enum import IntEnum
+from dataclasses import dataclass
 
 
-class Repository:
-    def __init__(self):
-        self.client = self._setup_client()
-        self.type = self._setup_type()
-
-    def _setup_client(self):
-        pass
-
-    def _setup_type(self):
-        pass
+@dataclass
+class RepositoryConfig:
+    dbType: int
 
 
 class RepositoryEnum(IntEnum):
@@ -21,3 +15,12 @@ class RepositoryEnum(IntEnum):
     @staticmethod
     def to_char(a: int):
         return {0: "SQL Database", 1: "NoSQL Database"}[a]
+
+
+class Repository:
+    def __init__(self, config: RepositoryConfig):
+        self.config = config
+        self.client = self._setup_client()
+
+    def _setup_client(self):
+        pass

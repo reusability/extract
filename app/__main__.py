@@ -25,6 +25,15 @@ from .helpers import AppBigQueryStorage
 # 2. create sequence diagram for metrics analysis
 # 3. update architecture (high-level and classes)
 #
+# App.Run() -- info below
+# while isNotEnd(repository.yaml):
+#   fetch item i in yaml file, e.g <organisation_1>/<project_1>
+#   mine that repository
+#   clean files
+#   run ck metrics
+#   clean metrics output
+#   output to csv
+#
 # flow -- mining -> refinement -> processing -> post-processing
 
 

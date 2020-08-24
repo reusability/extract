@@ -2,16 +2,21 @@
 from .helpers import AppBigQueryStorage
 
 # todos
-# fetch (data mining -> data refinement)
-# 1. sql query script to fetch a single project
-# 2. iterate query script to fetch various projects
+# pre-mining
+# 1. create yaml with mapped github repositories and associated projects
+# 2. utils/yaml.py -- should pull and push data into mining algorithm
 #
-# metrics analysis (data processing)
+# data mining -> data wrangling
+# 1. sql query script to fetch a single project
+# 2. remove unwanted files -- keep only .java but should be extendable to more files
+# 3. iterate query script to fetch various projects
+#
+# data processing (metrics analysis)
 # 1. once fetch a project, run CK metrics on the files
 # 2. clean output and push to csv file
 # 3. iterate multiple projects
 #
-# data on aws (data post-processing)
+# data post-processing (aws integration for on-line usage)
 # 1. push csv data into an S3 object
 # 2. /research repository should pull the S3 object
 #

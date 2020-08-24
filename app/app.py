@@ -17,7 +17,7 @@ class App:
 
     def Run(self):
         # generate query
-        query = generate_random_query()  # todo: fix
+        query = generate_random_query()  # todo: fix/remove
 
         # job
         query_job = self.repository.query(query)

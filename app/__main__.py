@@ -1,16 +1,9 @@
 # __main__.py
-# used to the main files in this packageg
-from .app import App, AppConfig
-from .repository import RepositoryBigQuery, RepositoryConfigBigQueryAPI
+from .helpers import AppBigQueryAPI
 
 if __name__ == "__main__":
     # init
-    bigQueryAppConfig = AppConfig(
-        repository=RepositoryBigQuery, repository_config=RepositoryConfigBigQueryAPI
-    )
-
-    # create app
-    app = App(bigQueryAppConfig)
+    app = AppBigQueryAPI()
 
     # run
     app.Run()

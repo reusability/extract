@@ -4,9 +4,14 @@ MODULE := app
 TAG := $(shell git describe --tags --always --dirty)
 
 init:
+	@echo "\nSetting up the python environment -- note, this setup assume you have virtual environment setup"
+	@echo "Note, this setup assume you have virtual environment setup"
 	python3 setup.py install
+	@echo "Pre-Commit Hooks setup"
+	pre-commit install
 
 run:
+	@echo "Starting the application"
 	@python -m $(MODULE)
 
 test:

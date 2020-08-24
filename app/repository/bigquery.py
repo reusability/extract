@@ -31,9 +31,9 @@ class RepositoryBigQuery(Repository):
 
 
 RepositoryConfigBigQueryAPI = RepositoryBigQueryConfig(
-    RepositoryBigQueryEnum.API, RepositoryEnum.SQL
+    apiType=RepositoryBigQueryEnum.API, dbType=RepositoryEnum.SQL
 )
 
-# RepositoryConfigBigQueryStorage = RepositoryBigQueryConfig(
-#     apiType=RepositoryBigQueryEnum.STORAGE, dbType=RepositoryEnum.SQL
-# )
+RepositoryConfigBigQueryStorage = RepositoryBigQueryConfig(
+    apiType=RepositoryBigQueryEnum.STORAGE, dbType=RepositoryEnum.SQL
+)

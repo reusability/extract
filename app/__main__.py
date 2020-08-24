@@ -8,7 +8,7 @@ from .helpers import AppBigQueryStorage
 #
 # data mining -> data wrangling
 # 1. sql query script to fetch a single project
-# 2. remove unwanted files -- keep only .java but should be extendable to more files
+# 2. remove unwanted files (wrangling) -- keep only .java but should be extendable to more files
 # 3. iterate query script to fetch various projects
 #
 # data processing (metrics analysis)

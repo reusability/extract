@@ -1,6 +1,10 @@
 # bigquery.py
+import google.auth
 from google.cloud import bigquery
-from .index import Repository, RepositoryEnum, RepositoryConfig
+from google.cloud import bigquery_storage_v1beta1
+from .index import Repository
+from .index import RepositoryEnum
+from .index import RepositoryConfig
 from enum import IntEnum
 from dataclasses import dataclass
 
@@ -24,10 +28,30 @@ class RepositoryBigQuery(Repository):
         super().__init__(config)
 
     def _setup_client(self):
-        return bigquery.Client()
+        # authorization
+        self.credentials, self.project_id = google.auth.default(
+            scopes=["https://www.googleapis.com/auth/cloud-platform"]
+        )
+
+        # client
+        client = bigquery.Client(credentials=self.credentials, project=self.project_id)
+
+        # ret
+        return client
 
     def query(self, query):
         return self.client.query(query)
+
+
+class RepositoryBigQueryStorage(RepositoryBigQuery):
+    def __init__(self, config: RepositoryBigQueryConfig):
+        super().__init__(config)
+        self._setup_client_storage()
+
+    def _setup_client_storage(self):
+        self.client_storage = bigquery_storage_v1beta1.BigQueryStorageClient(
+            credentials=self.credentials
+        )
 
 
 RepositoryConfigBigQueryAPI = RepositoryBigQueryConfig(

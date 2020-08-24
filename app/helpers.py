@@ -1,16 +1,20 @@
-# helpers
-from .repository import (
-    RepositoryBigQuery,
-    RepositoryConfigBigQueryAPI,
-    RepositoryConfigBigQueryStorage,
-)
-from .app import App, AppConfig
+# helpers.py
+from .repository import RepositoryBigQuery
+from .repository import RepositoryBigQueryStorage
+from .repository import RepositoryConfigBigQueryAPI
+from .repository import RepositoryConfigBigQueryStorage
+from .app import App
+from .app import AppConfig
 
 
 def AppBigQueryAPI():
+    name: str = "AppBigQueryAPI"
+
     # init
     bigQueryAppConfig = AppConfig(
-        repository=RepositoryBigQuery, repository_config=RepositoryConfigBigQueryAPI
+        name=name,
+        repository=RepositoryBigQuery,
+        repository_config=RepositoryConfigBigQueryAPI,
     )
 
     # create app
@@ -21,13 +25,17 @@ def AppBigQueryAPI():
 
 
 def AppBigQueryStorage():
+    name: str = "AppBigQueryStorage"
+
     # init
-    bigQueryAppConfig = AppConfig(
-        repository=RepositoryBigQuery, repository_config=RepositoryConfigBigQueryStorage
+    bigQueryAppConfigStorage = AppConfig(
+        name=name,
+        repository=RepositoryBigQueryStorage,
+        repository_config=RepositoryConfigBigQueryStorage,
     )
 
     # create app
-    app = App(bigQueryAppConfig)
+    app = App(bigQueryAppConfigStorage)
 
     # return
     return app

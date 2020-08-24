@@ -1,9 +1,14 @@
 # __main__.py
-from .helpers import AppBigQueryAPI
+from .helpers import AppBigQueryStorage
 
-if __name__ == "__main__":
+
+def main():
     # init
-    app = AppBigQueryAPI()
+    app = AppBigQueryStorage()  # noqa: F841
 
     # run
-    app.Run()
+    # app.Run()
+
+
+if __name__ == "__main__":
+    main()

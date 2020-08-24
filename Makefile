@@ -11,7 +11,7 @@ init:
 	pre-commit install
 
 run:
-	@echo "\nStarting the applicaiton"
+	@echo "Starting the application"
 	@python -m $(MODULE)
 
 test:

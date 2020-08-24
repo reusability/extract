@@ -40,6 +40,18 @@ from .helpers import AppBigQueryStorage
 # utility functions
 # - subprocess - accesing terminal commands like the ck runner
 # - yaml - read yaml files
+#
+# future pipeline goals
+# - runner
+#   - ck
+#   - sourcemeter
+#   - MOOD
+# - mining
+#   - BigQuery
+#   - GHArchive
+#   - GHTorrent
+# - automate yaml config pipeline
+#   - fetch projects from maven based on reuse
 
 
 def main():

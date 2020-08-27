@@ -53,6 +53,9 @@ class RepositoryBigQueryStorage(RepositoryBigQuery):
             credentials=self.credentials
         )
 
+    def query(self, query):
+        return self.client.query(query)
+
 
 RepositoryConfigBigQueryAPI = RepositoryBigQueryConfig(
     apiType=RepositoryBigQueryEnum.API, dbType=RepositoryEnum.SQL

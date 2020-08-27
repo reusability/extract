@@ -1,6 +1,7 @@
 # sql.py
 from jinja2 import Template
 
+
 # todo: turn this into a class
 
 

@@ -33,10 +33,16 @@ class App:
 
     def Run(self):
         # generate query
-        query = generate_random_query()  # todo: fix/remove
+        # github_query = """
+        #     SELECT f.repo_name, c.content
+        #     FROM bigquery-public-data.github_repos.files f left join bigquery-public-data.github_repos.contents c
+        #     on f.id = c.id
+        #     where f.path like '%.java' and f.repo_name in ('scala/scala', 'scalatest/scalatest')
+        #     limit 100;
+        # """
 
         # job
-        query_job = self.repository.query(query)
+        query_job = self.repository.query(generate_random_query())
 
         # print
         print("The query data:")

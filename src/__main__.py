@@ -45,7 +45,10 @@ def main():
     app = AppBigQueryStorage()  # noqa: F841
 
     # run
-    # src.Run()
+    app.Run()
+
+    # exit
+    app.Stop()
 
 
 if __name__ == "__main__":

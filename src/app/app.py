@@ -45,4 +45,4 @@ class App:
             print("name={}, count={}".format(row[0], row["total_people"]))
 
     def Stop(self):
-        pass
+        exit()

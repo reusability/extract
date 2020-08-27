@@ -130,3 +130,9 @@ dmypy.json
 
 # Logger
 debug.log
+
+# PyCharm
+.idea/**
+
+# Environment files
+.bigquery.json

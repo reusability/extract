@@ -1,5 +1,6 @@
 # __main__.py
-from .helpers import AppBigQueryStorage
+from src.app.helpers import AppBigQueryStorage
+import os
 
 # todos
 # pre-mining -- see branch: feature/mining
@@ -38,11 +39,13 @@ from .helpers import AppBigQueryStorage
 
 
 def main():
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "../.bigquery.json"
+
     # init
     app = AppBigQueryStorage()  # noqa: F841
 
     # run
-    # app.Run()
+    # src.Run()
 
 
 if __name__ == "__main__":

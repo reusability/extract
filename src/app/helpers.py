@@ -1,10 +1,10 @@
 # helpers.py
-from .repository import RepositoryBigQuery
-from .repository import RepositoryBigQueryStorage
-from .repository import RepositoryConfigBigQueryAPI
-from .repository import RepositoryConfigBigQueryStorage
-from .app import App
-from .app import AppConfig
+from src.repository import RepositoryBigQuery
+from src.repository import RepositoryBigQueryStorage
+from src.repository import RepositoryConfigBigQueryAPI
+from src.repository import RepositoryConfigBigQueryStorage
+from src.app import App
+from src.app import AppConfig
 
 
 def AppBigQueryAPI():
@@ -17,7 +17,7 @@ def AppBigQueryAPI():
         repository_config=RepositoryConfigBigQueryAPI,
     )
 
-    # create app
+    # create src
     app = App(bigQueryAppConfig)
 
     # return
@@ -34,7 +34,7 @@ def AppBigQueryStorage():
         repository_config=RepositoryConfigBigQueryStorage,
     )
 
-    # create app
+    # create src
     app = App(bigQueryAppConfigStorage)
 
     # return

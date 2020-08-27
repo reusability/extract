@@ -1,3 +1,3 @@
 # used to export modules
-# app
+# src
 from .app import App  # noqa: F401

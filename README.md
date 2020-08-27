@@ -24,7 +24,8 @@ https://www.python.org/downloads/release/python-378/
 
 ## Run the Project
 - Setup your Google Cloud BigQuery API Credential
-- Add information into `Make run` to ensure that you can run application with make.
+- In the root directory, add `.bigquery.json` and throw in your credentials above.
+- Now, you can either run the application with `make run` or use an IDE such as PyCharm.
 
 ## Adding dependencies
 - `pip install <your-package>` and add to `requirements.txt` if needed.

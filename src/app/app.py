@@ -1,11 +1,11 @@
-# app.py
-from .repository import Repository
-from .repository import RepositoryConfig
-from .repository import RepositoryEnum
-from .repository import RepositoryBigQueryEnum
-from .project import generate_random_query
+# src.py
+from src.repository import Repository
+from src.repository import RepositoryConfig
+from src.repository import RepositoryEnum
+from src.repository import RepositoryBigQueryEnum
+from src.project import generate_random_query
 from typing import NamedTuple
-from .utils import Logger
+from src.utils import Logger
 
 
 class AppConfig(NamedTuple):
@@ -45,4 +45,4 @@ class App:
             print("name={}, count={}".format(row[0], row["total_people"]))
 
     def Stop(self):
-        pass
+        exit()

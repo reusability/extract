@@ -18,7 +18,7 @@ class RepositoryEnum(IntEnum):
 
 
 class Repository:
-    # TODO
+    # todo
     # 1. __str__ should return self.config
     def __init__(self, config: RepositoryConfig):
         self.config = config

@@ -3,7 +3,8 @@ from src.repository import Repository
 from src.repository import RepositoryConfig
 from src.repository import RepositoryEnum
 from src.repository import RepositoryBigQueryEnum
-from src.project import generate_random_query
+
+# from src.project import generate_random_query
 from typing import NamedTuple
 from src.utils import Logger
 
@@ -33,16 +34,29 @@ class App:
 
     def Run(self):
         # generate query
-        query = generate_random_query()  # todo: fix/remove
+        # github_query = """
+        #     SELECT f.repo_name, c.content
+        #     FROM bigquery-public-data.github_repos.files f left join bigquery-public-data.github_repos.contents c
+        #     on f.id = c.id
+        #     where f.path like '%.java' and f.repo_name in ('scala/scala', 'scalatest/scalatest')
+        #     limit 100;
+        # """
 
         # job
-        query_job = self.repository.query(query)
+        query_job = self.repository.query("None")
 
         # print
         print("The query data:")
+        counter = 0
         for row in query_job:
-            # Row values can be accessed by field name or index.
-            print("name={}, count={}".format(row[0], row["total_people"]))
+            print(row)  # a bette way to visualise this maybe writing it to a file.
+            if counter > 100000:
+                break
+            counter += 1
+
+        # for row in query_job:
+        #     # Row values can be accessed by field name or index.
+        #     print("name={}, count={}".format(row[0], row["total_people"]))
 
     def Stop(self):
         exit()

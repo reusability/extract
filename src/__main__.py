@@ -6,7 +6,7 @@ import os
 # pre-mining -- branch: feature/mining
 # 1. create yaml with mapped github repositories and associated projects
 # 2. utils/yaml.py -- should pull and push data into mining algorithm
-#
+
 # data mining -> data wrangling -- branch: feature/mining
 # 1. sql query script to fetch a single project
 # 2. remove unwanted files (wrangling) -- keep only .java but should be extendable to more files
@@ -53,10 +53,28 @@ import os
 #   - GHTorrent
 # - automate yaml config pipeline
 #   - fetch projects from maven based on reuse
+#
+# updated todos list
+# pre-mining and mining
+# 1. manually fetch projects from mvn
+#   - find their reference in github
+#   - find their associated tags
+# 2. mine the repositories
+#   - git clone projects[i].github
+#   while hasTagsLeft(projects[i]):
+#   - git checkout tags/projects[i].tags[j]
+#   - mkdir outputs/scala
+#   - pipeline management (java files) --- extras; documentation, etc
+#       - run ck metrics on that project
+#       - output into csv
+#       - bundle csv in the format %projects[i]-tags[j]
+#           - cp class.csv ../outputs/projects[i]/tags[j]
+#           - cp projects.csv ../outputs/projects[i]/tags[j]
+#   - append the csv path into an array list
 
 
 def main():
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "../.bigquery.json"
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "../.bigquery.gson"
 
     # init
     app = AppBigQueryStorage()  # noqa: F841

@@ -11,3 +11,7 @@ from .bigquery import RepositoryBigQueryEnum  # noqa: F401
 from .bigquery import RepositoryBigQueryConfig  # noqa: F401
 from .bigquery import RepositoryConfigBigQueryAPI  # noqa: F401
 from .bigquery import RepositoryConfigBigQueryStorage  # noqa: F401
+
+# clone github
+from .gh_clone_versions import Clone  # noqa: F401
+from .gh_clone_versions import CloneConfig  # noqa: F401

@@ -20,8 +20,7 @@ class App:
         self.logger.l.info("application started!")
 
         # metrics
-        self.metric_config = config.metric_config
-        self.metric = config.metric
+        self.metric = config.metric(config.metric_config)
         self.logger.l.info("metrics init")
 
     def Run(self):
@@ -77,4 +76,4 @@ class AppRepositoryGitHub(AppRepositoryBigQuery):
 
     def Run(self):
         # do stuff
-        self.repository.do_stuff()
+        self.repository.do_stuff(self.metric)

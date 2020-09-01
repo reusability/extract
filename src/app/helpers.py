@@ -18,7 +18,7 @@ from .config import AppConfigRepository
 from .index import App, AppRepositoryGitHub
 
 # others
-from src.project import ProjectConfigScala, ProjectConfigGson
+from src.project import ProjectConfigGson
 from src.metrics import RunnerCK, RunnerMetricConfig
 
 
@@ -63,14 +63,12 @@ def HelperAppGitHub():
     # todo: inject source_code_dir as an environment variable
     metric_config = RunnerMetricConfig(
         name="CK",
-        source_code_dir="/Users/ahmedalasifer/Desktop/FIT4003/CK/ck/target/ck-0.6.3-SNAPSHOT-jar-with-dependencies.jar",
-        project_dir="",
-        output_dir="",
+        metrics_runner_file="/Users/ahmedalasifer/Desktop/FIT4003/CK/ck/target/ck-0.6.3-SNAPSHOT-jar-with-dependencies.jar",  # noqa: E501
     )
 
     # projects
     # todo: use mvn script to init this project_config
-    project_config = [ProjectConfigScala, ProjectConfigGson]
+    project_config = [ProjectConfigGson]
 
     # config app -- github
     config_app_github = AppConfigRepository(

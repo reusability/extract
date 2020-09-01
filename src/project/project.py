@@ -14,7 +14,7 @@ class Project:
         self.tags: [] = tags
 
         # setup commands and outputs directory
-        self.output_directory = "{}/outputs/{}".format(
+        self.output_directory = "{}/src/outputs/{}".format(
             str(Path().resolve().parent), self.name
         )
         self._command = "git -C {} clone {}".format(self.output_directory, self.github)
@@ -62,5 +62,5 @@ ProjectConfigGson = ProjectConfig(
     name="gson",
     maven="https://mvnrepository.com/artifact/com.google.code.gson/gson",
     github="https://github.com/google/gson.git",
-    tags=[],
+    tags=["2.8.4", "2.8.5", "2.8.6"],
 )

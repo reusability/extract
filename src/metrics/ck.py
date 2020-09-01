@@ -15,14 +15,14 @@ class RunnerCK(Runner):
         # init
         super().__init__(config)
 
+    def Run(self, project_directory):
         # create the command
-        self._command = "java -jar {} {}".format(
-            self.config.source_code_dir, self.config.project_dir
+        command = "java -jar {} {}".format(
+            self.config.metrics_runner_file, project_directory
         )
-        self.subprocess = Subprocess(self._command)
+        subprocess = Subprocess(command)
+        subprocess.Run()
 
-    def Run(self):
-        self.subprocess.Run()
-
-    def move_output(self, source):
-        copy_files(source=source + "*.csv", target=self.config.output_dir)
+    @staticmethod
+    def move_output(source, output):
+        copy_files(source=source + "*.csv", target=output)

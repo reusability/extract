@@ -9,14 +9,7 @@ from ..project.project import ProjectConfig
 
 @dataclass
 class RepositoryConfigGit(RepositoryConfig):
-    repo_uri: str
-    project_name: str
-    versions: list
-
-
-@dataclass
-class RepositoryConfigGitHub(RepositoryConfig):
-    clone_config: []
+    placeholder: int
 
 
 class RepositoryGit(Repository):
@@ -28,8 +21,43 @@ class RepositoryGit(Repository):
 
     def build_projects(self, project_configs: [ProjectConfig]):
         self.projects = [
-            Project(item[0], item[1], item[2], item[3]) for item in project_configs
+            Project(item.name, item.maven, item.github, item.tags)
+            for item in project_configs
         ]
 
+    def do_stuff(self):
+        print(self.projects)
+        for project in self.projects:
+            # clone
+            # clone = project.subprocess
 
-RepositoryConfigGitClone = RepositoryConfigGit(dbType=2)
+            # for each tag in project.tag
+            # checkout
+
+            # make dir
+
+            # build metrics
+
+            # remove dir
+            pass
+
+        # for repo in self.clone_config:
+        #     new_repo = self.clone(repo)
+        #     new_repo.clone_repo()
+        #     for v in repo.versions:
+        #         new_repo.checkout_version(v)
+        #         make_dir(new_repo.dir + "/{}".format(v))
+        #         self.metric_config = self.metric_config._replace(
+        #             project_dir="{}/{}".format(
+        #                 new_repo.dir, new_repo.config.project_name
+        #             ),
+        #             output_dir="{}/{}".format(new_repo.dir, v),
+        #         )
+        #
+        #         m = self.metric(self.metric_config)
+        #         m.Run()
+        #         m.move_output(source=str(Path().resolve().parent) + "/src/")
+        #     remove_dir("{}/{}".format(new_repo.dir, new_repo.config.project_name))
+
+
+RepositoryConfigGitHub = RepositoryConfigGit(dbType=2, placeholder=0)

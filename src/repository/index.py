@@ -21,7 +21,3 @@ class RepositoryEnum(IntEnum):
 class Repository:
     def __init__(self, config: RepositoryConfig):
         self.config = config
-        self.client = self._setup_client()
-
-    def _setup_client(self):
-        pass

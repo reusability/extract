@@ -1,3 +1,3 @@
 # used to export modules
 # src
-from .app import App  # noqa: F401
+# from .app import AppGitClone  # noqa: F401

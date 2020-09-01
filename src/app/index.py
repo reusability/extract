@@ -1,8 +1,7 @@
 # src.py
 from src.repository import RepositoryEnum
-
-from src.app import AppConfig
-from src.app import AppConfigRepository
+from .config import AppConfig
+from .config import AppConfigRepository
 
 from src.utils import Logger
 
@@ -23,7 +22,7 @@ class App:
         # metrics
         self.metric_config = config.metric_config
         self.metric = config.metric
-        self.logger.l.info("metrics init", self.metric_config.name)
+        self.logger.l.info("metrics init")
 
     def Run(self):
         pass
@@ -32,7 +31,7 @@ class App:
         pass
 
 
-class AppRepository(App):
+class AppRepositoryBigQuery(App):
     def __init__(self, config: AppConfigRepository):
         # init
         super().__init__(config)
@@ -68,7 +67,7 @@ class AppRepository(App):
         pass
 
 
-class AppGitHub(AppRepository):
+class AppRepositoryGitHub(AppRepositoryBigQuery):
     def __init__(self, config: AppConfigRepository):
         # init
         super().__init__(config)
@@ -77,21 +76,5 @@ class AppGitHub(AppRepository):
         self.repository.build_projects(config.projects_config)
 
     def Run(self):
-        pass
-        # for repo in self.clone_config:
-        #     new_repo = self.clone(repo)
-        #     new_repo.clone_repo()
-        #     for v in repo.versions:
-        #         new_repo.checkout_version(v)
-        #         make_dir(new_repo.dir + "/{}".format(v))
-        #         self.metric_config = self.metric_config._replace(
-        #             project_dir="{}/{}".format(
-        #                 new_repo.dir, new_repo.config.project_name
-        #             ),
-        #             output_dir="{}/{}".format(new_repo.dir, v),
-        #         )
-        #
-        #         m = self.metric(self.metric_config)
-        #         m.Run()
-        #         m.move_output(source=str(Path().resolve().parent) + "/src/")
-        #     remove_dir("{}/{}".format(new_repo.dir, new_repo.config.project_name))
+        # do stuff
+        self.repository.do_stuff()

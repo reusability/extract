@@ -21,7 +21,7 @@ class Project:
 
         # setup cloning using subprocess module
         # todo -- remove subprocess init
-        self.clone = Subprocess(self._command)
+        self.subprocess = Subprocess(self._command)
 
     def checkout_version(self, version: str):
         checkout = Subprocess(
@@ -36,7 +36,7 @@ class Project:
         make_dir(self._output_directory)
 
         # run the clone command
-        self.clone.Run()
+        self.subprocess.Run()
 
 
 @dataclass
@@ -50,13 +50,13 @@ class ProjectConfig:
 ProjectConfigScala = ProjectConfig(
     name="scala",
     maven="https://mvnrepository.com/artifact/org.scala-lang/scala-library",
-    github="https://github.com/scala/scala",
+    github="https://github.com/scala/scala.git",
     tags=["2.12.12", "2.13.3", "2.13.2"],
 )
 
 ProjectConfigGson = ProjectConfig(
     name="gson",
     maven="https://mvnrepository.com/artifact/com.google.code.gson/gson",
-    github="https://github.com/google/gson",
+    github="https://github.com/google/gson.git",
     tags=[],
 )

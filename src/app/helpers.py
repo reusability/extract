@@ -1,5 +1,7 @@
 # helpers.py
 # big query
+from src.repository.github import RepositoryConfigGitHub
+
 from src.repository import RepositoryBigQuery
 from src.repository import RepositoryBigQueryStorage
 from src.repository import RepositoryConfigBigQueryAPI
@@ -7,21 +9,20 @@ from src.repository import RepositoryConfigBigQueryStorage
 
 # git
 from src.repository import RepositoryGit
-from src.repository import RepositoryConfigGit
 
 # config
 from .config import AppConfig
 from .config import AppConfigRepository
 
 # apps
-from .app import App
+from .index import App, AppRepositoryGitHub
 
 # others
 from src.project import ProjectConfigScala, ProjectConfigGson
 from src.metrics import RunnerCK, RunnerMetricConfig
 
 
-def AppBigQueryAPI():
+def HelperAppBigQueryAPI():
     name: str = "AppBigQueryAPI"
 
     # init
@@ -38,7 +39,7 @@ def AppBigQueryAPI():
     return app
 
 
-def AppBigQueryStorage():
+def HelperAppBigQueryStorage():
     name: str = "AppBigQueryStorage"
 
     # init
@@ -55,7 +56,7 @@ def AppBigQueryStorage():
     return app
 
 
-def AppGitClone():
+def HelperAppGitHub():
     name: str = "AppGitClone"
 
     # metrics
@@ -77,10 +78,10 @@ def AppGitClone():
         metric=RunnerCK,
         metric_config=metric_config,
         repository=RepositoryGit,
-        repository_config=RepositoryConfigGit,
+        repository_config=RepositoryConfigGitHub,
         projects_config=project_config,
     )
 
-    app = App(config_app_github)
+    app = AppRepositoryGitHub(config_app_github)
 
     return app

@@ -1,6 +1,6 @@
 # __main__.py
 # from src.app.helpers import AppBigQueryStorage
-from src.app.helpers import AppGitHub
+from src.app import HelperAppGitHub
 import os
 
 # todos
@@ -78,8 +78,8 @@ def main():
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "../.bigquery.gson"
 
     # init
-    # app = AppBigQueryStorage()  # noqa: F841
-    app = AppGitHub()
+    app = HelperAppGitHub()
+
     # run
     app.Run()
 

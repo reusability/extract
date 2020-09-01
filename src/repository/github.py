@@ -1,3 +1,5 @@
+# from src.metrics import RunnerMetricConfig
+
 from src.project import Project
 
 from .index import Repository
@@ -40,8 +42,14 @@ class RepositoryGit(Repository):
                 project.make_dir(project.output_directory + "/{}".format(tag))
 
                 # build metrics
+                # RunnerMetricConfig(project.name, project.output_directory, )
 
-            # remove dir
+                # name: str
+                # project_dir: str
+                # output_dir: str
+                # source_code_dir: str
+                # remove dir
+
             pass
 
         # for repo in self.clone_config:

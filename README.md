@@ -28,14 +28,10 @@ https://www.python.org/downloads/release/python-378/
 2. Run the `Make init` command that will initiate the `setup.py` file -- install dependencies and set's up the entire project.
 
 ## Run the Project
-- Create `.env` file at root directory.
-- Add `ck_path=/path/to/ck/source/code`
+- Create `.env` file in root directory.
+- Add `ck_path=/path/to/ck/source/code` to `.env` file
+    - e.g `ck_path=/users/user_a/Desktop/ck/target/ck-*.*.*-SNAPSHOT-jar-with-dependencies.jar`
 
-### CK Tool Setup
-- Download and install [CK Metrics](https://github.com/mauricioaniche/ck) tool and it is prerequisites
-- Add the path to run `ck-*.*.*-SNAPSHOT-jar-with-dependencies.jar` .env file after the `ck_path=` var
-
-#### BigQuery API
 - Setup your Google Cloud BigQuery API Credential
 - In the root directory, add `.bigquery.json` and throw in your credentials above.
 - Now, you can either run the application with `make run` or use an IDE such as PyCharm.

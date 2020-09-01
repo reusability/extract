@@ -1,6 +1,6 @@
 # __main__.py
 # from src.app.helpers import AppBigQueryStorage
-from src.app.helpers import CloneRepo
+from src.app.helpers import AppGitHub
 import os
 
 # todos
@@ -79,7 +79,7 @@ def main():
 
     # init
     # app = AppBigQueryStorage()  # noqa: F841
-    app = CloneRepo()
+    app = AppGitHub()
     # run
     app.Run()
 

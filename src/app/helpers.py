@@ -1,27 +1,38 @@
 # helpers.py
+# big query
 from src.repository import RepositoryBigQuery
 from src.repository import RepositoryBigQueryStorage
 from src.repository import RepositoryConfigBigQueryAPI
 from src.repository import RepositoryConfigBigQueryStorage
-from src.repository import Clone, CloneConfig
+
+# git
+from src.repository import RepositoryGit
+from src.repository import RepositoryConfigGit
+
+# config
+from .config import AppConfig
+from .config import AppConfigRepository
+
+# apps
+from .app import App
+
+# others
 from src.project import projects
-from src.app import App
-from src.app import AppConfig
-from src.matric import CK, MetricConfig
+from src.metrics import RunnerCK, RunnerMetricConfig
 
 
 def AppBigQueryAPI():
     name: str = "AppBigQueryAPI"
 
     # init
-    bigQueryAppConfig = AppConfig(
+    config_app_big_query_api = AppConfig(
         name=name,
         repository=RepositoryBigQuery,
         repository_config=RepositoryConfigBigQueryAPI,
     )
 
     # create src
-    app = App(bigQueryAppConfig)
+    app = App(config_app_big_query_api)
 
     # return
     return app
@@ -31,48 +42,47 @@ def AppBigQueryStorage():
     name: str = "AppBigQueryStorage"
 
     # init
-    bigQueryAppConfigStorage = AppConfig(
+    config_app_big_query_storage = AppConfig(
         name=name,
         repository=RepositoryBigQueryStorage,
         repository_config=RepositoryConfigBigQueryStorage,
     )
 
     # create src
-    app = App(bigQueryAppConfigStorage)
+    app = App(config_app_big_query_storage)
 
     # return
     return app
 
 
-def CloneRepo():
-    name: str = "CloneRepo"
+def AppGitClone():
+    name: str = "AppGitClone"
 
     clone_configs = []
 
     for repo in projects.projects:
         clone_configs.append(
-            CloneConfig(
+            RepositoryConfigGit(
                 repo_uri=repo.github, project_name=repo.name, versions=repo.tags
             )
         )
 
-    ck_config = MetricConfig(
+    # todo: inject source_code_dir as an environment variable
+    runner_ck_config = RunnerMetricConfig(
         name="CK",
-        project_dir=None,
-        output_dir=None,
         source_code_dir="/Users/ahmedalasifer/Desktop/FIT4003/CK/ck/target/ck-0.6.3-SNAPSHOT-jar-with-dependencies.jar",
+        project_dir="",
+        output_dir="",
     )
 
-    clone = AppConfig(
-        repository=None,
-        repository_config=None,
-        metric=CK,
-        metric_config=ck_config,
+    config_app_git_clone = AppConfigRepository(
         name=name,
-        clone_config=clone_configs,
-        clone=Clone,
+        metric=RunnerCK,
+        metric_config=runner_ck_config,
+        repository=RepositoryGit,
+        repository_config=RepositoryConfigGit,
     )
 
-    app = App(clone)
+    app = App(config_app_git_clone)
 
     return app

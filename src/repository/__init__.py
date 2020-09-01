@@ -5,13 +5,13 @@ from .index import RepositoryEnum  # noqa: F401
 from .index import RepositoryConfig  # noqa: F401
 
 # bigquery
-from .bigquery import RepositoryBigQuery  # noqa: F401
-from .bigquery import RepositoryBigQueryStorage  # noqa: F401
-from .bigquery import RepositoryBigQueryEnum  # noqa: F401
-from .bigquery import RepositoryBigQueryConfig  # noqa: F401
-from .bigquery import RepositoryConfigBigQueryAPI  # noqa: F401
-from .bigquery import RepositoryConfigBigQueryStorage  # noqa: F401
+from .big_query import RepositoryBigQuery  # noqa: F401
+from .big_query import RepositoryBigQueryStorage  # noqa: F401
+from .big_query import RepositoryEnumBigQuery  # noqa: F401
+from .big_query import RepositoryConfigBigQuery  # noqa: F401
+from .big_query import RepositoryConfigBigQueryAPI  # noqa: F401
+from .big_query import RepositoryConfigBigQueryStorage  # noqa: F401
 
 # clone github
-from .gh_clone_versions import Clone  # noqa: F401
-from .gh_clone_versions import CloneConfig  # noqa: F401
+from .git_clone import RepositoryGit  # noqa: F401
+from .git_clone import RepositoryConfigGit  # noqa: F401

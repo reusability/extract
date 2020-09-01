@@ -1,56 +1,57 @@
 # src.py
-from src.repository import Repository
-from src.repository import RepositoryConfig
+from src.repository import RepositoryEnum
+
+from src.app import AppConfig
+from src.app import AppConfigRepository
 
 # from src.repository import RepositoryEnum
 # from src.repository import RepositoryBigQueryEnum
 # from src.repository import CloneConfig
-from src.repository import Clone
-from src.matric import CK
-from src.matric import MetricConfig
 
 # from src.project import generate_random_query
-from typing import NamedTuple
 from src.utils import Logger, make_dir, remove_dir
 from pathlib import Path
 
 
-class AppConfig(NamedTuple):
-    name: str
-    repository: Repository
-    repository_config: RepositoryConfig
-    clone: Clone
-    clone_config: list
-    metric_config: MetricConfig
-    metric: CK
-
-
 class App:
-    def __init__(self, appConfig: AppConfig):
-        # init
-        self.logger: Logger = Logger(appConfig.name)
+    def __init__(self, config: AppConfig):
+        # config files
+        self.config: AppConfig = config
+
+        # logger
+        self.logger: Logger = Logger(config.name)
         self.logger.l.info("application started!")
 
-        # setup
-        self.clone = appConfig.clone
-        self.clone_config = appConfig.clone_config
-
-        self.metric_config = appConfig.metric_config
-        self.metric = appConfig.metric
-
-        self.logger.l.info("cloning to github using subprocess")
-        # repository = appConfig.repository
-        # repository_config = appConfig.repository_config
-        # self.logger.l.info(
-        #     "creating repository -> db_type: %s, api_type: %s",
-        #     RepositoryEnum.to_char(repository_config.dbType),
-        #     RepositoryBigQueryEnum.to_char(repository_config.apiType),
-        # )
-        # self.repository: Repository = repository(repository_config)
-        # self.logger.l.info("repository created!")
+        # metrics
+        self.metric_config = config.metric_config
+        self.metric = config.metric
+        self.logger.l.info("metrics init", self.metric_config.name)
 
     def Run(self):
-        # generate query
+        pass
+
+    def Stop(self):
+        pass
+
+
+class AppRepository(App):
+    def __init__(self, config: AppConfigRepository):
+        # init
+        super().__init__(config)
+
+        # setup
+        repository = config.repository
+        repository_config = config.repository_config
+
+        # init
+        self.logger.l.info(
+            "creating repository -> db_type: %s",
+            RepositoryEnum.to_char(repository_config.dbType),
+        )
+        self.repository: config = repository(repository_config)
+        self.logger.l.info("repository created!")
+
+    def Run(self):
         # github_query = """
         #     SELECT f.repo_name, c.content
         #     FROM bigquery-public-data.github_repos.files f left join bigquery-public-data.github_repos.contents c
@@ -58,10 +59,20 @@ class App:
         #     where f.path like '%.java' and f.repo_name in ('scala/scala', 'scalatest/scalatest')
         #     limit 100;
         # """
+        #
+        # query_job = self.repository.query(github_query)
+        #
+        # for row in query_job:
+        #     # Row values can be accessed by field name or index.
+        #     print("name={}, count={}".format(row[0], row["total_people"]))
+        pass
 
-        # job
-        # query_job = self.repository.query("None")
+    def Stop(self):
+        pass
 
+
+class AppGitHub(AppRepository):
+    def Run(self):
         for repo in self.clone_config:
             new_repo = self.clone(repo)
             new_repo.clone_repo()
@@ -76,21 +87,6 @@ class App:
                 )
 
                 m = self.metric(self.metric_config)
-                m.run_ck()
+                m.Run()
                 m.move_output(source=str(Path().resolve().parent) + "/src/")
             remove_dir("{}/{}".format(new_repo.dir, new_repo.config.project_name))
-        # print
-        # print("The query data:")
-        # counter = 0
-        # for row in query_job:
-        #     print(row)
-        #     if counter > 100000:
-        #         break
-        #     counter += 1
-
-        # for row in query_job:
-        #     # Row values can be accessed by field name or index.
-        #     print("name={}, count={}".format(row[0], row["total_people"]))
-
-    def Stop(self):
-        exit()

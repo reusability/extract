@@ -1,4 +1,4 @@
-# bigquery.py
+# big_query.py
 import google.auth
 from google.cloud import bigquery
 from google.cloud import bigquery_storage_v1
@@ -10,21 +10,12 @@ from dataclasses import dataclass
 
 
 @dataclass
-class RepositoryBigQueryConfig(RepositoryConfig):
+class RepositoryConfigBigQuery(RepositoryConfig):
     apiType: int
 
 
-class RepositoryBigQueryEnum(IntEnum):
-    API = 0
-    STORAGE = 1
-
-    @staticmethod
-    def to_char(a: int):
-        return {0: "BigQuery API", 1: "BigQuery Storage API"}[a]
-
-
 class RepositoryBigQuery(Repository):
-    def __init__(self, config: RepositoryBigQueryConfig):
+    def __init__(self, config: RepositoryConfigBigQuery):
         super().__init__(config)
 
     def _setup_client(self):
@@ -44,7 +35,7 @@ class RepositoryBigQuery(Repository):
 
 
 class RepositoryBigQueryStorage(RepositoryBigQuery):
-    def __init__(self, config: RepositoryBigQueryConfig):
+    def __init__(self, config: RepositoryConfigBigQuery):
         super().__init__(config)
         self._setup_client_storage()
 
@@ -83,10 +74,19 @@ class RepositoryBigQueryStorage(RepositoryBigQuery):
         return reader.rows(session)
 
 
-RepositoryConfigBigQueryAPI = RepositoryBigQueryConfig(
-    apiType=RepositoryBigQueryEnum.API, dbType=RepositoryEnum.SQL
+class RepositoryEnumBigQuery(IntEnum):
+    API = 0
+    STORAGE = 1
+
+    @staticmethod
+    def to_char(a: int):
+        return {0: "BigQuery API", 1: "BigQuery Storage API"}[a]
+
+
+RepositoryConfigBigQueryAPI = RepositoryConfigBigQuery(
+    apiType=RepositoryEnumBigQuery.API, dbType=RepositoryEnum.SQL
 )
 
-RepositoryConfigBigQueryStorage = RepositoryBigQueryConfig(
-    apiType=RepositoryBigQueryEnum.STORAGE, dbType=RepositoryEnum.SQL
+RepositoryConfigBigQueryStorage = RepositoryConfigBigQuery(
+    apiType=RepositoryEnumBigQuery.STORAGE, dbType=RepositoryEnum.SQL
 )

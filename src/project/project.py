@@ -25,7 +25,7 @@ class Project:
 
     def checkout_version(self, tag: str):
         checkout = Subprocess(
-            "git -C {}/{} checkout tags/v{}".format(
+            "git -C {}/{} checkout tags/{}".format(
                 self.output_directory, self.name, tag
             )
         )
@@ -55,12 +55,12 @@ ProjectConfigScala = ProjectConfig(
     name="scala",
     maven="https://mvnrepository.com/artifact/org.scala-lang/scala-library",
     github="https://github.com/scala/scala.git",
-    tags=["2.12.12", "2.13.3", "2.13.2"],
+    tags=["v2.12.12", "v2.13.3", "v2.13.2"],
 )
 
 ProjectConfigGson = ProjectConfig(
     name="gson",
     maven="https://mvnrepository.com/artifact/com.google.code.gson/gson",
     github="https://github.com/google/gson.git",
-    tags=["2.8.4", "2.8.5", "2.8.6"],
+    tags=["gson-parent-2.8.4", "gson-parent-2.8.5", "gson-parent-2.8.6"],
 )

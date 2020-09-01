@@ -12,3 +12,7 @@ class Runner:
 
     def Run(self, output_directory):
         pass
+
+    @staticmethod
+    def move_output(source, output):
+        pass

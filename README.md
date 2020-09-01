@@ -1,15 +1,17 @@
-# BigQuery GitHub Mining
+# GitHub Mining
 
 # Project Setup
 1. Go to `.github/workflows` and update documents depending on the projects name, the branching structures, PRs, etc.
 
 # Environment Configurations
-First, follow these instructions to set up your environment to prepare the Flatland environment on your local machine.
+- First, follow these instructions to set up your environment to prepare the Flatland environment on your local machine.
 
 Download and install Python 3.7.8, if not installed yet.
 ```
 https://www.python.org/downloads/release/python-378/
 ```
+- Download & install [CK Metric](https://github.com/mauricioaniche/ck) analysis tool. 
+    - Please follow installation steps provided at their README page 
 
 ## Building the Project
 1. **Recommended**: `Make venv-<os>` -- this should create the virtual environment -- see `venv-windows` and `venv-unix` in `Makefile` for more information,
@@ -23,6 +25,8 @@ https://www.python.org/downloads/release/python-378/
 2. Run the `Make init` command that will initiate the `setup.py` file -- install dependencies and set's up the entire project.
 
 ## Run the Project
+- Create `.env` file at root directory.
+- Add `ck_path=/path/to/ck/source/code`
 - Setup your Google Cloud BigQuery API Credential
 - In the root directory, add `.bigquery.json` and throw in your credentials above.
 - Now, you can either run the application with `make run` or use an IDE such as PyCharm.

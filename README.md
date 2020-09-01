@@ -7,12 +7,14 @@ It allows to run the analysis tool on different releases of the same projects.
 1. Go to `.github/workflows` and update documents depending on the projects name, the branching structures, PRs, etc.
 
 # Environment Configurations
-First, follow these instructions to set up your environment to prepare the Flatland environment on your local machine.
+- First, follow these instructions to set up your environment to prepare the Flatland environment on your local machine.
 
 Download and install Python 3.7.8, if not installed yet.
 ```
 https://www.python.org/downloads/release/python-378/
 ```
+- Download & install [CK Metric](https://github.com/mauricioaniche/ck) analysis tool. 
+    - Please follow installation steps provided at their README page 
 
 ## Building the Project
 1. **Recommended**: `Make venv-<os>` -- this should create the virtual environment -- see `venv-windows` and `venv-unix` in `Makefile` for more information,
@@ -26,6 +28,9 @@ https://www.python.org/downloads/release/python-378/
 2. Run the `Make init` command that will initiate the `setup.py` file -- install dependencies and set's up the entire project.
 
 ## Run the Project
+- Create `.env` file at root directory.
+- Add `ck_path=/path/to/ck/source/code`
+
 ### CK Tool Setup
 - Download and install [CK Metrics](https://github.com/mauricioaniche/ck) tool and it is prerequisites
 - Add the path to run `ck-*.*.*-SNAPSHOT-jar-with-dependencies.jar` .env file after the `ck_path=` var

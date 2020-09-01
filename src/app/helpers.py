@@ -1,79 +1,84 @@
 # helpers.py
+# big query
+from src.repository.github import RepositoryConfigGitHub
+
 from src.repository import RepositoryBigQuery
 from src.repository import RepositoryBigQueryStorage
 from src.repository import RepositoryConfigBigQueryAPI
 from src.repository import RepositoryConfigBigQueryStorage
-from src.repository import Clone, CloneConfig
-from src.project import projects
-from src.app import App
-from src.app import AppConfig
-from src.matric import CK, MetricConfig
+
+# git
+from src.repository import RepositoryGit
+
+# config
+from .config import AppConfig
+from .config import AppConfigRepository
+
+# apps
+from .index import App, AppRepositoryGitHub
+
+# others
+from src.project import ProjectConfigGson
+from src.metrics import RunnerCK, RunnerMetricConfig
 import os
 
 
-def AppBigQueryAPI():
+def HelperAppBigQueryAPI():
     name: str = "AppBigQueryAPI"
 
     # init
-    bigQueryAppConfig = AppConfig(
+    config_app_big_query_api = AppConfig(
         name=name,
         repository=RepositoryBigQuery,
         repository_config=RepositoryConfigBigQueryAPI,
     )
 
     # create src
-    app = App(bigQueryAppConfig)
+    app = App(config_app_big_query_api)
 
     # return
     return app
 
 
-def AppBigQueryStorage():
+def HelperAppBigQueryStorage():
     name: str = "AppBigQueryStorage"
 
     # init
-    bigQueryAppConfigStorage = AppConfig(
+    config_app_big_query_storage = AppConfig(
         name=name,
         repository=RepositoryBigQueryStorage,
         repository_config=RepositoryConfigBigQueryStorage,
     )
 
     # create src
-    app = App(bigQueryAppConfigStorage)
+    app = App(config_app_big_query_storage)
 
     # return
     return app
 
 
-def CloneRepo():
-    name: str = "CloneRepo"
+def HelperAppGitHub():
+    name: str = "AppGitClone"
 
-    clone_configs = []
+    # metrics
+    # todo: inject source_code_dir as an environment variable
+    metric_config = RunnerMetricConfig(
+        name="CK", metrics_runner_file=os.getenv("ck_path")
 
-    for repo in projects.projects:
-        clone_configs.append(
-            CloneConfig(
-                repo_uri=repo.github, project_name=repo.name, versions=repo.tags
-            )
-        )
+    # projects
+    # todo: use mvn script to init this project_config
+    project_config = [ProjectConfigGson]
 
-    ck_config = MetricConfig(
-        name="CK",
-        project_dir=None,
-        output_dir=None,
-        source_code_dir=os.getenv("ck_path"),
-    )
-
-    clone = AppConfig(
-        repository=None,
-        repository_config=None,
-        metric=CK,
-        metric_config=ck_config,
+    # config app -- github
+    config_app_github = AppConfigRepository(
         name=name,
-        clone_config=clone_configs,
-        clone=Clone,
+        metric=RunnerCK,
+        metric_config=metric_config,
+        repository=RepositoryGit,
+        repository_config=RepositoryConfigGitHub,
+        projects_config=project_config,
     )
 
-    app = App(clone)
+    app = AppRepositoryGitHub(config_app_github)
 
     return app

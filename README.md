@@ -1,5 +1,8 @@
 # GitHub Mining
 
+This project is meant to allow to run static metrics analysis tools on GitHub projects.
+It allows to run the analysis tool on different releases of the same projects.
+
 # Project Setup
 1. Go to `.github/workflows` and update documents depending on the projects name, the branching structures, PRs, etc.
 

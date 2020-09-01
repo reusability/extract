@@ -64,7 +64,6 @@ def HelperAppGitHub():
     # todo: inject source_code_dir as an environment variable
     metric_config = RunnerMetricConfig(
         name="CK", metrics_runner_file=os.getenv("ck_path")
-    )
 
     # projects
     # todo: use mvn script to init this project_config

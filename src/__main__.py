@@ -6,7 +6,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-
 # todos
 # pre-mining -- branch: feature/mining
 # 1. create yaml with mapped github repositories and associated projects

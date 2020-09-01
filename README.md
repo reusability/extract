@@ -1,5 +1,8 @@
 # GitHub Mining
 
+This project is meant to allow to run static metrics analysis tools on GitHub projects.
+It allows to run the analysis tool on different releases of the same projects.
+
 # Project Setup
 1. Go to `.github/workflows` and update documents depending on the projects name, the branching structures, PRs, etc.
 
@@ -27,6 +30,12 @@ https://www.python.org/downloads/release/python-378/
 ## Run the Project
 - Create `.env` file at root directory.
 - Add `ck_path=/path/to/ck/source/code`
+
+### CK Tool Setup
+- Download and install [CK Metrics](https://github.com/mauricioaniche/ck) tool and it is prerequisites
+- Add the path to run `ck-*.*.*-SNAPSHOT-jar-with-dependencies.jar` .env file after the `ck_path=` var
+
+#### BigQuery API
 - Setup your Google Cloud BigQuery API Credential
 - In the root directory, add `.bigquery.json` and throw in your credentials above.
 - Now, you can either run the application with `make run` or use an IDE such as PyCharm.

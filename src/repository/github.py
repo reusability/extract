@@ -29,14 +29,17 @@ class RepositoryGit(Repository):
         print(self.projects)
         for project in self.projects:
             # clone
-            # clone = project.subprocess
+            project.setup()
 
             # for each tag in project.tag
-            # checkout
+            for tag in project.tags:
+                # checkout
+                project.checkout_version(tag)
 
-            # make dir
+                # make dir
+                project.make_dir(project.output_directory + "/{}".format(tag))
 
-            # build metrics
+                # build metrics
 
             # remove dir
             pass

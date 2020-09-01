@@ -14,29 +14,33 @@ class Project:
         self.tags: [] = tags
 
         # setup commands and outputs directory
-        self._output_directory = "{}/outputs/{}".format(
+        self.output_directory = "{}/outputs/{}".format(
             str(Path().resolve().parent), self.name
         )
-        self._command = "git -C {} clone {}".format(self._output_directory, self.github)
+        self._command = "git -C {} clone {}".format(self.output_directory, self.github)
 
         # setup cloning using subprocess module
         # todo -- remove subprocess init
         self.subprocess = Subprocess(self._command)
 
-    def checkout_version(self, version: str):
+    def checkout_version(self, tag: str):
         checkout = Subprocess(
             "git -C {}/{} checkout tags/v{}".format(
-                self._output_directory, self.name, version
+                self.output_directory, self.name, tag
             )
         )
         checkout.Run()
 
     def setup(self):
         # make the output directory
-        make_dir(self._output_directory)
+        make_dir(self.output_directory)
 
         # run the clone command
         self.subprocess.Run()
+
+    @staticmethod
+    def make_dir(path):
+        make_dir(path)
 
 
 @dataclass

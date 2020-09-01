@@ -1,10 +1,11 @@
 pytest==5.3.2
 pytest-cov==2.8.1
 bandit==1.6.2
-pre-commit==2.6.0
+pre-commit==2.7.1
 google-cloud-bigquery==1.27.2
 google-cloud-bigquery-storage==1.0.0
 fastavro==1.0.0
 jinja2==2.11.2
 pandas==1.1.1
 pyarrow==1.0.1
+python-dotenv==0.14.0

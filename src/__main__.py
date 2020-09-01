@@ -1,6 +1,10 @@
 # __main__.py
-from src.app.helpers import AppBigQueryStorage
+# from src.app.helpers import AppBigQueryStorage
+from src.app import HelperAppGitHub
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # todos
 # pre-mining -- branch: feature/mining
@@ -77,7 +81,7 @@ def main():
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "../.bigquery.gson"
 
     # init
-    app = AppBigQueryStorage()  # noqa: F841
+    app = HelperAppGitHub()
 
     # run
     app.Run()

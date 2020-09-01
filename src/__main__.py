@@ -2,6 +2,9 @@
 # from src.app.helpers import AppBigQueryStorage
 from src.app.helpers import CloneRepo
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # todos
 # pre-mining -- branch: feature/mining

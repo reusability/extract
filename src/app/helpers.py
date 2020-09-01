@@ -8,6 +8,7 @@ from src.project import projects
 from src.app import App
 from src.app import AppConfig
 from src.matric import CK, MetricConfig
+import os
 
 
 def AppBigQueryAPI():
@@ -60,7 +61,7 @@ def CloneRepo():
         name="CK",
         project_dir=None,
         output_dir=None,
-        source_code_dir="/Users/ahmedalasifer/Desktop/FIT4003/CK/ck/target/ck-0.6.3-SNAPSHOT-jar-with-dependencies.jar",
+        source_code_dir=os.getenv("ck_path"),
     )
 
     clone = AppConfig(

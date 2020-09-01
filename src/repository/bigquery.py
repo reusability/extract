@@ -1,4 +1,4 @@
-# big_query.py
+# bigquery.py
 import google.auth
 from google.cloud import bigquery
 from google.cloud import bigquery_storage_v1
@@ -12,6 +12,15 @@ from dataclasses import dataclass
 @dataclass
 class RepositoryConfigBigQuery(RepositoryConfig):
     apiType: int
+
+
+class RepositoryEnumBigQuery(IntEnum):
+    API = 0
+    STORAGE = 1
+
+    @staticmethod
+    def to_char(a: int):
+        return {0: "BigQuery API", 1: "BigQuery Storage API"}[a]
 
 
 class RepositoryBigQuery(Repository):
@@ -72,15 +81,6 @@ class RepositoryBigQueryStorage(RepositoryBigQuery):
         reader = self.client.read_rows(session.streams[0].name)
 
         return reader.rows(session)
-
-
-class RepositoryEnumBigQuery(IntEnum):
-    API = 0
-    STORAGE = 1
-
-    @staticmethod
-    def to_char(a: int):
-        return {0: "BigQuery API", 1: "BigQuery Storage API"}[a]
 
 
 RepositoryConfigBigQueryAPI = RepositoryConfigBigQuery(

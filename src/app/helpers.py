@@ -17,7 +17,7 @@ from .config import AppConfigRepository
 from .app import App
 
 # others
-from src.project import projects
+from src.project import ProjectConfigScala, ProjectConfigGson
 from src.metrics import RunnerCK, RunnerMetricConfig
 
 
@@ -58,31 +58,29 @@ def AppBigQueryStorage():
 def AppGitClone():
     name: str = "AppGitClone"
 
-    clone_configs = []
-
-    for repo in projects.projects:
-        clone_configs.append(
-            RepositoryConfigGit(
-                repo_uri=repo.github, project_name=repo.name, versions=repo.tags
-            )
-        )
-
+    # metrics
     # todo: inject source_code_dir as an environment variable
-    runner_ck_config = RunnerMetricConfig(
+    metric_config = RunnerMetricConfig(
         name="CK",
         source_code_dir="/Users/ahmedalasifer/Desktop/FIT4003/CK/ck/target/ck-0.6.3-SNAPSHOT-jar-with-dependencies.jar",
         project_dir="",
         output_dir="",
     )
 
-    config_app_git_clone = AppConfigRepository(
+    # projects
+    # todo: use mvn script to init this project_config
+    project_config = [ProjectConfigScala, ProjectConfigGson]
+
+    # config app -- github
+    config_app_github = AppConfigRepository(
         name=name,
         metric=RunnerCK,
-        metric_config=runner_ck_config,
+        metric_config=metric_config,
         repository=RepositoryGit,
         repository_config=RepositoryConfigGit,
+        projects_config=project_config,
     )
 
-    app = App(config_app_git_clone)
+    app = App(config_app_github)
 
     return app

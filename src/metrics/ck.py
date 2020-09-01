@@ -22,7 +22,7 @@ class RunnerCK(Runner):
         self.subprocess = Subprocess(self._command)
 
     def Run(self):
-        self.subprocess.run()
+        self.subprocess.Run()
 
     def move_output(self, source):
         copy_files(source=source + "*.csv", target=self.config.output_dir)

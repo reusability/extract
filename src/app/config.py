@@ -2,6 +2,7 @@ from typing import NamedTuple
 
 from src.metrics import RunnerMetricConfig
 from src.metrics import RunnerCK
+from src.project.project import ProjectConfig
 from src.repository import Repository
 from src.repository import RepositoryConfig
 
@@ -16,3 +17,4 @@ class AppConfig(NamedTuple):
 class AppConfigRepository(AppConfig):
     repository: Repository
     repository_config: RepositoryConfig
+    projects_config: [ProjectConfig]

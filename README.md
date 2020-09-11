@@ -13,8 +13,14 @@ Download and install Python 3.7.8, if not installed yet.
 ```
 https://www.python.org/downloads/release/python-378/
 ```
-- Download & install [CK Metric](https://github.com/mauricioaniche/ck) analysis tool. 
-    - Please follow installation steps provided at their README page 
+Download & install [CK Metric](https://github.com/mauricioaniche/ck) analysis tool. 
+* Please follow installation steps provided at their README page. 
+
+Download & install [SourceMeter](https://www.sourcemeter.com/) analysis tool.
+* Please read the instruction provided in Java folder that request some environment variables to be set before you are 
+able to run it. 
+* Please note that `SourceMeter` has only been tested on Ubnutu OS.
+
 
 ## Building the Project
 1. **Recommended**: `Make venv-<os>` -- this should create the virtual environment -- see `venv-windows` and `venv-unix` in `Makefile` for more information,
@@ -32,6 +38,9 @@ https://www.python.org/downloads/release/python-378/
 - Add `ck_path=/path/to/ck/source/code` to `.env` file
     - e.g `ck_path=/users/user_a/Desktop/ck/target/ck-*.*.*-SNAPSHOT-jar-with-dependencies.jar`
 
+- Add `sourceMeter_path=/path/to/sourceMeter/Java` to `.env` file.
+    - e.g `sourceMeter_path=/home/user_1/Desktop/SourceMeter-9.1.1-x64-Linux/Java`
+    
 - Setup your Google Cloud BigQuery API Credential
 - In the root directory, add `.bigquery.json` and throw in your credentials above.
 - Now, you can either run the application with `make run` or use an IDE such as PyCharm.

@@ -1,0 +1,33 @@
+  [2020-09-11 19:18:47] Starting task: DirectoryBasedAnalysisTask
+  [2020-09-11 19:19:31] Task ended: DirectoryBasedAnalysisTask Result:OK
+  [2020-09-11 19:19:31] Starting task: JANFilterTask
+  [2020-09-11 19:19:31] Task ended: JANFilterTask Result:OK
+  [2020-09-11 19:19:31] Starting task: JAN2limTask
+  [2020-09-11 19:19:39] Task ended: JAN2limTask Result:OK
+  [2020-09-11 19:19:39] Starting task: ProfileTask
+  [2020-09-11 19:19:39] Starting task: Lim2metricsTask
+  [2020-09-11 19:19:39] Starting task: DcfTask
+  [2020-09-11 19:19:39] Task ended: ProfileTask Result:OK
+  [2020-09-11 19:19:40] Task ended: Lim2metricsTask Result:OK
+  [2020-09-11 19:19:47] Task ended: DcfTask Result:OK
+  [2020-09-11 19:19:47] Starting task: FaultHunterTask
+  [2020-09-11 19:19:47] Starting task: AndroidHunterTask
+  [2020-09-11 19:19:47] Starting task: PMD2GraphTask
+  [2020-09-11 19:19:47] Starting task: VulnerabilityHunterTask
+  [2020-09-11 19:19:48] Task ended: FaultHunterTask Result:OK
+  [2020-09-11 19:19:48] Starting task: RTEHunterTask
+  [2020-09-11 19:19:48] Task ended: VulnerabilityHunterTask Result:OK
+  [2020-09-11 19:19:48] Task ended: AndroidHunterTask Result:OK
+  [2020-09-11 19:19:48] Task ended: PMD2GraphTask Result:OK
+  [2020-09-11 19:19:49] Task ended: RTEHunterTask Result:OK
+  [2020-09-11 19:19:49] Starting task: GraphMergeTask
+  [2020-09-11 19:19:50] Task ended: GraphMergeTask Result:OK
+  [2020-09-11 19:19:50] Starting task: MetricHunterTask
+  [2020-09-11 19:19:53] Task ended: MetricHunterTask Result:OK
+  [2020-09-11 19:19:53] Starting task: UserDefinedMetricsTask
+  [2020-09-11 19:19:53] Task ended: UserDefinedMetricsTask Result:OK
+  [2020-09-11 19:19:53] Starting task: AddLicenceTask
+  [2020-09-11 19:19:53] Task ended: AddLicenceTask Result:OK
+  [2020-09-11 19:19:53] Starting task: GraphDumpTask
+  [2020-09-11 19:19:57] Task ended: GraphDumpTask Result:OK
+Done!

@@ -19,7 +19,7 @@ from .index import App, AppRepositoryGitHub
 
 # others
 from src.project import ProjectConfigGson
-from src.metrics import RunnerCK, RunnerMetricConfig
+from src.metrics import RunnerMetricConfig, RunnerSourceMeter
 import os
 
 
@@ -63,7 +63,8 @@ def HelperAppGitHub():
     # metrics
     # todo: inject source_code_dir as an environment variable
     metric_config = RunnerMetricConfig(
-        name="CK", metrics_runner_file=os.getenv("ck_path")
+        name="SM", metrics_runner_file=os.getenv("sourceMeter_path"), move_output=False
+    )
 
     # projects
     # todo: use mvn script to init this project_config
@@ -72,7 +73,7 @@ def HelperAppGitHub():
     # config app -- github
     config_app_github = AppConfigRepository(
         name=name,
-        metric=RunnerCK,
+        metric=RunnerSourceMeter,
         metric_config=metric_config,
         repository=RepositoryGit,
         repository_config=RepositoryConfigGitHub,

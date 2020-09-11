@@ -1,0 +1,4 @@
+/home/ahmed/Desktop/SourceMeter-9.1.1-x64-Linux/Java/SourceMeterJava
+-projectName=gson-parent-2.8.6
+-projectBaseDir=/home/ahmed/Desktop/FIT4003/extract/src/outputs/gson/gson
+-resultsDir=/home/ahmed/Desktop/FIT4003/extract/src/outputs/gson/gson-parent-2.8.6

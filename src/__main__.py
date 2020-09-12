@@ -75,6 +75,12 @@ load_dotenv()
 #           - cp class.csv ../outputs/projects[i]/tags[j]
 #           - cp projects.csv ../outputs/projects[i]/tags[j]
 #   - append the csv path into an array list
+#
+# requirements - week 7
+#   - P1 - incorporate Matthew's Python script
+#   - P1 - tag
+#   - P2 - EC2 + S3 object
+#   - P3 - source meter documentation
 
 
 def main():

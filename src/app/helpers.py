@@ -65,6 +65,7 @@ def HelperAppGitHub():
     metric_config = RunnerMetricConfig(
         name="CK", metrics_runner_file=os.getenv("ck_path")
     )
+
     # projects
     # todo: use mvn script to init this project_config
     project_config = [ProjectConfigGson]

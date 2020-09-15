@@ -6,6 +6,7 @@ from src.utils import make_dir
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
+import re as regex
 
 
 class Project:
@@ -44,7 +45,7 @@ class Project:
             self.tags = [
                 (
                     line.strip(),
-                    line[re.search(r"\d", line).start() :].strip(),  # noqa : E203
+                    line[regex.search(r"\d", line).start() :].strip(),  # noqa : E203
                 )
                 for line in content
             ]

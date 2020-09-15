@@ -33,14 +33,16 @@ class Project:
     def _retrieve_github_tags(self):
         # store all tags in .txt file in same directory as the project
         tags = Subprocess(
-            "git -C {}/{} tag > {}/{}.txt".format(
+            "git -C {}/{} tag > {}/{}_gh_tags.txt".format(
                 self.output_directory, self.name, self.output_directory, self.name
             )
         )
         tags.Run()
 
         # store tags in variable
-        with open("{}/{}.txt".format(self.output_directory, self.name), "r") as content:
+        with open(
+            "{}/{}_gh_tags.txt".format(self.output_directory, self.name), "r"
+        ) as content:
             # index 0 -> original tag, index 1 -> remove all prefix string
             self.tags = [
                 (
@@ -49,7 +51,6 @@ class Project:
                 )
                 for line in content
             ]
-        print(self.tags)
 
         # create empty txt file to store unmatched tags
         Subprocess(

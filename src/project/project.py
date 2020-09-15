@@ -42,6 +42,7 @@ class Project:
         self.subprocess.Run()
 
         # run maven_reuse
+        # TODO: move this to subprocess
         self._maven_reuse()
 
     def _maven_reuse(self):
@@ -78,7 +79,7 @@ class Project:
         for d in data:
             if len(d) == 4:
                 data_frame["version"].append(d[0])
-                data_frame["usage"].append(d[2])
+                data_frame["usage"].append(int(d[2].replace(",", "")))
                 # TODO: store the version number so it can be used to checkout in github
 
         df = pd.DataFrame(data_frame)

@@ -27,8 +27,7 @@ class RepositoryGit(Repository):
 
     def build_projects(self, project_configs: [ProjectConfig]):
         self.projects = [
-            Project(item.name, item.maven, item.github, item.releases)
-            for item in project_configs
+            Project(item.name, item.maven, item.github) for item in project_configs
         ]
 
     def do_stuff(self, runner: Runner):
@@ -38,10 +37,12 @@ class RepositoryGit(Repository):
             project.setup()
 
             # for each tag in project.tag
-            for release in project.releases:
+            for release in project.matched_maven_gh:
                 # init
-                project.checkout_version(release)  # checkout
-                tag_output_directory = project.output_directory + "/{}".format(release)
+                project.checkout_version(release.gh_tag)  # checkout
+                tag_output_directory = project.output_directory + "/{}".format(
+                    release.maven_release
+                )
 
                 # make dir
                 project.make_dir(tag_output_directory)
@@ -58,7 +59,6 @@ class RepositoryGit(Repository):
                     )
                 else:
                     runner.Run(project.output_directory + "/{}".format(project.name))
-
             # remove project
             # TODO i had to add another dependency to remove the project
             remove_dir("{}/{}".format(project.output_directory, project.name))

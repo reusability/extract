@@ -15,14 +15,12 @@ class RunnerCK(Runner):
         # init
         super().__init__(config)
 
-    def Run(self, project_directory):
+    def Run(self, project_directory, move_output=False, output_source=None):
         # create the command
         command = "java -jar {} {}".format(
             self.config.metrics_runner_file, project_directory
         )
         subprocess = Subprocess(command)
         subprocess.Run()
-
-    @staticmethod
-    def move_output(source, output):
-        copy_files(source=source + "*.csv", target=output)
+        if move_output:
+            copy_files(source=output_source + "*.csv", target=super().get_output())

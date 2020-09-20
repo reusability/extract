@@ -47,14 +47,18 @@ class RepositoryGit(Repository):
                 # make dir
                 project.make_dir(tag_output_directory)
 
-                # build metrics
-                runner.Run(project.output_directory + "/{}".format(project.name))
+                # output directory
+                runner.set_output(tag_output_directory)
 
-                # move output
-                runner.move_output(
-                    str(Path().resolve().parent) + "/src/", tag_output_directory
-                )  # TODO hey: the csv files are stored under src directory
-                break
+                # build metrics
+                if runner.config.move_output:
+                    runner.Run(
+                        project.output_directory + "/{}".format(project.name),
+                        move_output=True,
+                        output_source=str(Path().resolve().parent) + "/src/",
+                    )
+                else:
+                    runner.Run(project.output_directory + "/{}".format(project.name))
             # remove project
             # TODO i had to add another dependency to remove the project
             remove_dir("{}/{}".format(project.output_directory, project.name))

@@ -138,4 +138,5 @@ debug.log
 .bigquery.json
 
 # CSV Outputs
-/src/outputs/**
+
+**/outputs/**/*

@@ -27,7 +27,7 @@ class RepositoryGit(Repository):
 
     def build_projects(self, project_configs: [ProjectConfig]):
         self.projects = [
-            Project(item.name, item.maven, item.github, item.tags)
+            Project(item.name, item.maven, item.github, item.releases)
             for item in project_configs
         ]
 
@@ -38,10 +38,10 @@ class RepositoryGit(Repository):
             project.setup()
 
             # for each tag in project.tag
-            for tag in project.tags:
+            for release in project.releases:
                 # init
-                project.checkout_version(tag)  # checkout
-                tag_output_directory = project.output_directory + "/{}".format(tag)
+                project.checkout_version(release)  # checkout
+                tag_output_directory = project.output_directory + "/{}".format(release)
 
                 # make dir
                 project.make_dir(tag_output_directory)

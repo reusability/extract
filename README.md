@@ -13,8 +13,6 @@ Download and install Python 3.7.8, if not installed yet.
 ```
 https://www.python.org/downloads/release/python-378/
 ```
-Download & install [CK Metric](https://github.com/mauricioaniche/ck) analysis tool. 
-* Please follow installation steps provided at their README page. 
 
 Download & install [SourceMeter](https://www.sourcemeter.com/) analysis tool.
 * Please read the instruction provided in Java folder that request some environment variables to be set before you are 
@@ -35,9 +33,6 @@ able to run it.
 
 ## Run the Project
 - Create `.env` file in root directory.
-- Add `ck_path=/path/to/ck/source/code` to `.env` file
-    - e.g `ck_path=/users/user_a/Desktop/ck/target/ck-*.*.*-SNAPSHOT-jar-with-dependencies.jar`
-
 - Add `sourceMeter_path=/path/to/sourceMeter/Java` to `.env` file.
     - e.g `sourceMeter_path=/home/user_1/Desktop/SourceMeter-9.1.1-x64-Linux/Java`
     

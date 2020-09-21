@@ -68,7 +68,6 @@ def HelperAppGitHub():
     # projects
     # todo: use mvn script to init this project_config
     project_config = Project.build_projects()
-    print(project_config)
 
     # config app -- github
     config_app_github = AppConfigRepository(

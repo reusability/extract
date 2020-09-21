@@ -27,5 +27,6 @@ def copy_files(source: str, target: str, dir=False):
 
 
 def remove_dir(path: str):
+    Subprocess("sudo chmod 777 .")
     sub = Subprocess("sudo rm -rf {}".format(path))
     sub.Run()

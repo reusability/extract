@@ -18,7 +18,7 @@ from .config import AppConfigRepository
 from .index import App, AppRepositoryGitHub
 
 # others
-from src.project import ProjectConfigGson
+from src.project import ProjectConfigOkHttp
 from src.metrics import RunnerMetricConfig, RunnerSourceMeter
 import os
 
@@ -68,7 +68,7 @@ def HelperAppGitHub():
 
     # projects
     # todo: use mvn script to init this project_config
-    project_config = [ProjectConfigGson]
+    project_config = [ProjectConfigOkHttp]
 
     # config app -- github
     config_app_github = AppConfigRepository(

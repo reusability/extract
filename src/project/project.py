@@ -15,8 +15,11 @@ class Project:
         self.name = name
         self.maven: str = maven
         self.github: str = github
-        self._releases: [] = []  # stores to Maven releases
-        self._tags: [] = None  # store github tags
+        # stores Maven releases (pandas dataFrame). col 0: release, col 2: usage, col 2: date
+        self._releases: pd.DataFrame = None
+        self._tags: [] = (
+            []
+        )  # store github tags. index 0: full tag, index 1: release number
 
         self.matched_maven_gh: [
             Match_Maven_GH
@@ -47,13 +50,14 @@ class Project:
         ) as content:
             # index 0 -> original tag,
             # index 1 -> remove prefix string
-            self._tags = [
-                (
-                    line.strip(),
-                    line[regex.search(r"\d", line).start() :].strip(),  # noqa : E203
-                )
-                for line in content
-            ]
+            for line in content:
+                start_index = regex.search(r"\d", line)
+                try:
+                    start_index = start_index.start()
+                    self._tags.append((line.strip(), line[start_index:].strip()))
+                except Exception as error:  # noqa : F841
+                    pass
+
             self._tags.reverse()
 
         # create empty txt file to store unmatched tags
@@ -99,33 +103,38 @@ class Project:
                 data.append(minor_releases)
 
         # write the data to .csv file
-        data_frame = {"version": [], "usage": []}
+        data_frame = {"release": [], "usage": [], "date": []}
         for d in data:
             if len(d) == 4:
-                data_frame["version"].append(d[0])
+                data_frame["release"].append(d[0])
                 data_frame["usage"].append(int(d[2].replace(",", "")))
-                self._releases.append(d[0])
+                data_frame["date"].append(d[3])
 
         df = pd.DataFrame(data_frame)
-        # .csv format: release_number, usage
-        df.to_csv(
+        self._releases = df.sort_values(by="usage", ascending=False)
+
+        # .csv format: release_number, usage, date
+        self._releases.to_csv(
             "{}/{}_maven_reuse.csv".format(self.output_directory, self.name),
             index=False,
             header=False,
         )
 
     def _match_maven_release_gh_tags(self):
-        for release in self._releases:
+
+        for index, release in self._releases.iterrows():
             try:
-                gh_tag = [i[1] for i in self._tags].index(release)
+                gh_tag = [i[1] for i in self._tags].index(release["release"])
                 self.matched_maven_gh.append(
-                    Match_Maven_GH(gh_tag=self._tags[gh_tag][0], maven_release=release)
+                    Match_Maven_GH(
+                        gh_tag=self._tags[gh_tag][0], maven_release=release["release"]
+                    )
                 )
             except ValueError as error:  # noqa : F841
                 with open(
                     "{}/{}_unmatched.txt".format(self.output_directory, self.name), "a"
                 ) as file:
-                    file.write(release)
+                    file.write(release[0])
 
     def setup(self):
         # make the output directory
@@ -170,4 +179,10 @@ ProjectConfigGson = ProjectConfig(
     name="gson",
     maven="https://mvnrepository.com/artifact/com.google.code.gson/gson",
     github="https://github.com/google/gson.git",
+)
+
+ProjectConfigOkHttp = ProjectConfig(
+    name="okhttp",
+    maven="https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp",
+    github="https://github.com/square/okhttp",
 )

@@ -18,8 +18,8 @@ from .config import AppConfigRepository
 from .index import App, AppRepositoryGitHub
 
 # others
-from src.project import ProjectConfigOkHttp
-from src.metrics import RunnerMetricConfig, RunnerSourceMeter
+from src.project import Project
+from src.metrics import RunnerMetricConfig, RunnerCK
 import os
 
 
@@ -63,17 +63,18 @@ def HelperAppGitHub():
     # metrics
     # todo: inject source_code_dir as an environment variable
     metric_config = RunnerMetricConfig(
-        name="SM", metrics_runner_file=os.getenv("sourceMeter_path"), move_output=False
+        name="ck", metrics_runner_file=os.getenv("ck_path"), move_output=True
     )
 
     # projects
     # todo: use mvn script to init this project_config
-    project_config = [ProjectConfigOkHttp]
+    project_config = Project.build_projects()
+    print(project_config)
 
     # config app -- github
     config_app_github = AppConfigRepository(
         name=name,
-        metric=RunnerSourceMeter,
+        metric=RunnerCK,
         metric_config=metric_config,
         repository=RepositoryGit,
         repository_config=RepositoryConfigGitHub,

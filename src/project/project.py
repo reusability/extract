@@ -1,12 +1,14 @@
 # project.py
 from dataclasses import dataclass
 from pathlib import Path
-from src.utils import Subprocess
-from src.utils import make_dir
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import re as regex
+
+from src.utils import Subprocess
+from src.utils import make_dir
+from src.utils import parse_dataset
 
 
 class Project:
@@ -154,6 +156,30 @@ class Project:
     @staticmethod
     def make_dir(path):
         make_dir(path)
+
+    @staticmethod
+    def build_projects():
+        # todo: move into config
+        filename = "utils/dataset.csv"
+
+        # data set
+        dataset = parse_dataset(filename)
+
+        # build
+        projects = []
+        for item in dataset:
+            # parse name based on github
+            name = dataset[item][1].split("/")[-1]
+
+            # append
+            projects.append(
+                ProjectConfig(
+                    name=name, maven=dataset[item][0], github=dataset[item][1],
+                )
+            )
+
+        # return
+        return projects
 
 
 @dataclass

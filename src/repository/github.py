@@ -31,12 +31,11 @@ class RepositoryGit(Repository):
         ]
 
     def do_stuff(self, runner: Runner):
-        print(self.projects)
         for project in self.projects:
             # clone
             project.setup()
 
-            # for each tag in project.tag
+            # for each tag in project.matched_maven_github releases
             for release in project.matched_maven_gh:
                 # init
                 project.checkout_version(release.gh_tag)  # checkout
@@ -59,6 +58,8 @@ class RepositoryGit(Repository):
                     )
                 else:
                     runner.Run(project.output_directory + "/{}".format(project.name))
+
+                break
             # remove project
             # TODO i had to add another dependency to remove the project
             remove_dir("{}/{}".format(project.output_directory, project.name))

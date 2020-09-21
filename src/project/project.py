@@ -15,12 +15,12 @@ class Project:
         self.name = name
         self.maven: str = maven
         self.github: str = github
-        self._releases: [] = []  # refers to Maven releases
+        self._releases: [] = []  # stores to Maven releases
+        self._tags: [] = None  # store github tags
 
-        # variable to store github tags
-        self._tags: [] = None
-
-        self.matched_maven_gh: [Match_Maven_GH] = []
+        self.matched_maven_gh: [
+            Match_Maven_GH
+        ] = []  # stores matched maven releases with GH tags
 
         # setup commands and outputs directory
         self.output_directory = "{}/src/outputs/{}".format(
@@ -107,7 +107,7 @@ class Project:
                 self._releases.append(d[0])
 
         df = pd.DataFrame(data_frame)
-        # .csv format: release number, usage
+        # .csv format: release_number, usage
         df.to_csv(
             "{}/{}_maven_reuse.csv".format(self.output_directory, self.name),
             index=False,

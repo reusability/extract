@@ -6,7 +6,7 @@ from .index import RunnerMetricConfig, Runner
 This function implements the CK runner.
 
 example:
-java -jar ck-0.6.3-SNAPSHOT-jar-with-dependencies.jar /path/to/direction/<project>
+java -jar ck.jar /path/to/direction/<project>
 """
 
 

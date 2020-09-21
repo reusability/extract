@@ -20,7 +20,6 @@ from .index import App, AppRepositoryGitHub
 # others
 from src.project import Project
 from src.metrics import RunnerMetricConfig, RunnerCK
-import os
 
 
 def HelperAppBigQueryAPI():
@@ -63,7 +62,7 @@ def HelperAppGitHub():
     # metrics
     # todo: inject source_code_dir as an environment variable
     metric_config = RunnerMetricConfig(
-        name="ck", metrics_runner_file=os.getenv("ck_path"), move_output=True
+        name="ck", metrics_runner_file="utils/ck.jar", move_output=True
     )
 
     # projects

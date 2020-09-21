@@ -27,5 +27,5 @@ def copy_files(source: str, target: str, dir=False):
 
 
 def remove_dir(path: str):
-    sub = Subprocess("rm -r {}".format(path))
+    sub = Subprocess("rm -rf {}".format(path))
     sub.Run()

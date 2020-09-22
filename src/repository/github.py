@@ -5,6 +5,7 @@ from src.project import Project
 from .index import Repository
 from .index import RepositoryConfig
 from dataclasses import dataclass
+import time
 
 from ..project.project import ProjectConfig
 
@@ -63,6 +64,11 @@ class RepositoryGit(Repository):
             # remove project
             # TODO i had to add another dependency to remove the project
             remove_dir("{}/{}".format(project.output_directory, project.name))
+
+            # sleep between projects
+            seconds = 10
+            print("Sleeping for {}".format((seconds)))
+            time.sleep(seconds)
 
 
 RepositoryConfigGitHub = RepositoryConfigGit(dbType=2, placeholder=0)

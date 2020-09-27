@@ -83,6 +83,4 @@ class AppRepositoryGitHub(AppRepositoryBigQuery):
         # ))
         #
         # http_dir = '/var/www/html/output'
-        # copy_files(source="{}/src/outputs,zip".format(
-        #     str(Path().resolve().parent)
-        # ), target=http_dir)
+        # copy_files(source="outputs.zip", target=http_dir)

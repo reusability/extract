@@ -53,17 +53,23 @@ class RepositoryGit(Repository):
                 # build metrics
                 if runner.config.move_output:
                     runner.Run(
-                        project.output_directory + "/{}".format(project.name),
+                        project.output_directory
+                        + "/{}".format(project.github_project_name),  # noqa : W503
                         move_output=True,
                         output_source=str(Path().resolve().parent) + "/src/",
                     )
                 else:
-                    runner.Run(project.output_directory + "/{}".format(project.name))
+                    runner.Run(
+                        project.output_directory
+                        + "/{}".format(project.github_project_name)  # noqa : W503
+                    )
 
                 break
             # remove project
             # TODO i had to add another dependency to remove the project
-            remove_dir("{}/{}".format(project.output_directory, project.name))
+            remove_dir(
+                "{}/{}".format(project.output_directory, project.github_project_name)
+            )
 
             # sleep between projects
             seconds = 10

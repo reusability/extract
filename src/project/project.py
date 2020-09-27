@@ -17,6 +17,7 @@ class Project:
         self.name = name
         self.maven: str = maven
         self.github: str = github
+        self.github_project_name: str = self.github.split("/")[-1]
         # stores Maven releases (pandas dataFrame). col 0: release, col 2: usage, col 2: date
         self._releases: pd.DataFrame = None
         self._tags: [] = (
@@ -41,7 +42,10 @@ class Project:
         # store all tags in .txt file in same directory as the project
         tags = Subprocess(
             "git -C {}/{} tag > {}/{}_gh_tags.txt".format(
-                self.output_directory, self.name, self.output_directory, self.name
+                self.output_directory,
+                self.github_project_name,
+                self.output_directory,
+                self.name,
             )
         )
         tags.Run()
@@ -68,10 +72,9 @@ class Project:
         ).Run()
 
     def checkout_version(self, gh_tag: str):
-
         checkout = Subprocess(
             "git -C {}/{} checkout tags/{}".format(
-                self.output_directory, self.name, gh_tag
+                self.output_directory, self.github_project_name, gh_tag
             )
         )
         checkout.Run()
@@ -167,17 +170,15 @@ class Project:
 
         # build
         projects = []
-        for item in dataset:
-            # parse name based on github
-            name = dataset[item][1].split("/")[-1]
-
+        for name, item in dataset.items():
             # append
             projects.append(
                 ProjectConfig(
-                    name=name, maven=dataset[item][0], github=dataset[item][1],
+                    name=name,
+                    maven=item[0],
+                    github=item[1],
                 )
             )
-
         # return
         return projects
 

@@ -9,13 +9,11 @@ class RepositoryConfig:
 
 
 class RepositoryEnum(IntEnum):
-    SQL = 0
-    NO_SQL = 1
-    GITHUB = 2
+    GITHUB = 0
 
     @staticmethod
     def to_char(a: int):
-        return {0: "SQL Database", 1: "NoSQL Database", 2: "GitHub Database"}[a]
+        return {0: "GitHub Database"}[a]
 
 
 class Repository:

@@ -1,6 +1,6 @@
 # __main__.py
 # from src.app.helpers import AppBigQueryStorage
-from src.app import HelperAppGitHub
+from src.app import HelperAppGitHubCK as HelperApp
 import os
 from dotenv import load_dotenv
 
@@ -87,7 +87,7 @@ def main():
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "../.bigquery.gson"
 
     # init
-    app = HelperAppGitHub()
+    app = HelperApp()
 
     # run
     app.Run()

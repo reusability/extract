@@ -1,4 +1,4 @@
-MODULE := app
+MODULE := src
 
 # This version-strategy uses git tags to set the version string
 TAG := $(shell git describe --tags --always --dirty)

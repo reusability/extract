@@ -158,16 +158,3 @@ class ProjectConfig:
 class Match_Maven_GH:
     gh_tag: str
     maven_release: str
-
-
-ProjectConfigScala = ProjectConfig(
-    name="scala",
-    maven="https://mvnrepository.com/artifact/org.scala-lang/scala-library",
-    github="https://github.com/scala/scala.git",
-)
-
-ProjectConfigGson = ProjectConfig(
-    name="gson",
-    maven="https://mvnrepository.com/artifact/com.google.code.gson/gson",
-    github="https://github.com/google/gson.git",
-)

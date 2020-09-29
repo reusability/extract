@@ -6,17 +6,15 @@ from src.utils import Subprocess
 from src.utils import copy_files
 
 # metrics.py
-from .index import RunnerMetricConfig, Runner
+from .index import RunnerMetricConfig
+from .index import Runner
 
 """
-This function implements the CK runner.
-
-example:
-java -jar ck-0.6.3-SNAPSHOT-jar-with-dependencies.jar /path/to/direction/<project>
+SourceMeterJava -projectName=MyProject -projectBaseDir=MyProjectDir -resultsDir=Results
 """
 
 
-class RunnerCK(Runner):
+class RunnerSM(Runner):
     def __init__(self, config: RunnerMetricConfig):
         # init
         super().__init__(config)
@@ -30,9 +28,12 @@ class RunnerCK(Runner):
             self._move_output(output_source)
 
     def _generate_metrics(self, project_directory):
-        # create command
-        command = "java -jar {} {}".format(
-            self.config.metrics_runner_file, project_directory
+        # create the command
+        command = "{}/SourceMeterJava -projectName={} -projectBaseDir={} -resultsDir={}".format(
+            self.config.metrics_runner_file,
+            self.get_output().split("/")[-1],
+            project_directory,
+            self.get_output(),
         )
 
         # run
@@ -40,9 +41,9 @@ class RunnerCK(Runner):
         subprocess.Run()
 
     def _move_output(self, output_source):
-        copy_files(source=output_source + "*.csv", target=self.get_output())
+        copy_files(source=output_source + "*.csv", target=self.output)
 
 
-RunnerMetricConfigCK = RunnerMetricConfig(
-    name="CK", metrics_runner_file=os.getenv("ck_path"), move_output=True
+RunnerMetricConfigSM = RunnerMetricConfig(
+    name="SM", metrics_runner_file=os.getenv("sm_path"), move_output=False
 )

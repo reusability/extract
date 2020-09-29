@@ -14,6 +14,14 @@ run:
 	@echo "Starting the application"
 	@python -m $(MODULE)
 
+ck:
+	@echo "Starting the application"
+	@python -m $(MODULE) --metrics ck
+
+sm:
+	@echo "Starting the application"
+	@python -m $(MODULE) --metrics sm
+
 test:
 	@pytest
 

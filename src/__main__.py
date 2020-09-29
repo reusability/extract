@@ -1,7 +1,8 @@
 # __main__.py
 # from src.app.helpers import AppBigQueryStorage
-from src.app import HelperAppGitHubCK as HelperApp
-import os
+from src.app import HelperAppGitHubCK
+from src.app import HelperAppGitHubSM
+import click
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -83,17 +84,29 @@ load_dotenv()
 #   - P3 - source meter documentation
 
 
-def main():
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "../.bigquery.gson"
-
+@click.command()
+@click.option("--metrics", default="ck", help="ck metrics or sourcemeter; ck or sm")
+def main(metrics):
     # init
-    app = HelperApp()
+    app = build_app(metrics)
 
     # run
     app.Run()
 
     # exit
     app.Stop()
+
+
+def build_app(metrics):
+    # todo: clean up
+    if metrics == "ck":
+        app = HelperAppGitHubCK()
+    elif metrics == "sm":
+        app = HelperAppGitHubSM()
+    else:
+        raise ValueError("the metrics is not found")
+
+    return app
 
 
 if __name__ == "__main__":

@@ -10,3 +10,4 @@ pandas==1.1.1
 pyarrow==1.0.1
 python-dotenv==0.14.0
 bs4==0.0.1
+click==7.1.2

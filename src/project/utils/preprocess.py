@@ -35,7 +35,7 @@ def preprocess_github_tags(name, output_directory, github):
         tags.reverse()
 
     # touch unmatched
-    command_touch(name, output_directory, FILENAME_TAGS_UNMATCHED)
+    Subprocess(command_touch(name, output_directory, FILENAME_TAGS_UNMATCHED)).Run()
 
     # return
     return tags

@@ -58,6 +58,7 @@ def HelperAppBigQueryStorage():
 
 def HelperAppGitHub():
     name: str = "AppGitClone"
+    count: int = 100
 
     # metrics
     # todo: inject source_code_dir as an environment variable
@@ -67,7 +68,7 @@ def HelperAppGitHub():
 
     # projects
     # todo: use mvn script to init this project_config
-    project_config = Project.build_projects()
+    project_config = Project.build_projects(count)
 
     # config app -- github
     config_app_github = AppConfigRepository(

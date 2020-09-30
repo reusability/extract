@@ -1,14 +1,14 @@
 # project.py
 from dataclasses import dataclass
 from pathlib import Path
-import requests
-from bs4 import BeautifulSoup
 import pandas as pd
 import re as regex
+import time
+import csv
 
 from src.utils import Subprocess
 from src.utils import make_dir
-from src.utils import parse_dataset
+from src.utils import crawl_maven_project, Maven_Crawler
 
 
 class Project:
@@ -80,40 +80,15 @@ class Project:
         checkout.Run()
 
     def _maven_reuse(self):
-        page = requests.get(self.maven)
-
-        # load html page
-        soup = BeautifulSoup(page.content, "html.parser")
-
-        data = []
-        table = soup.find("table", attrs={"class": "grid versions"})
-        table_body = table.find_all("tbody")
-
-        # loop over the releases table: for each major release
-        for t in table_body:
-            rows = t.find_all("tr")
-            # for each minor release
-            for row in rows:
-                cols = row.find_all("td")
-                minor_releases = []
-                # for each cell
-                for element in cols:
-                    cell_data = element.text.strip()
-                    try:
-                        # 'rowspan' --> means this cell is for major release. e.g 4.X.X
-                        data.append(["main", cell_data, int(element["rowspan"]) - 1])
-                    except Exception as error:  # noqa : F841
-                        # if the cell is not 'rowspan', it means it stores the actual release. e.g 4.2.1
-                        minor_releases.append(cell_data)
-                data.append(minor_releases)
-
+        # TODO move to Crawler repo
+        data = crawl_maven_project(self.maven)
         # write the data to .csv file
         data_frame = {"release": [], "usage": [], "date": []}
-        for d in data:
-            if len(d) == 4:
-                data_frame["release"].append(d[0])
-                data_frame["usage"].append(int(d[2].replace(",", "")))
-                data_frame["date"].append(d[3])
+        for key, data in data.items():
+            for minor in data[key]["releases"]:
+                data_frame["release"].append(minor["release"])
+                data_frame["usage"].append(int(minor["usage"].replace(",", "")))
+                data_frame["date"].append(minor["date"])
 
         df = pd.DataFrame(data_frame)
         self._releases = df.sort_values(by="usage", ascending=False)
@@ -161,26 +136,69 @@ class Project:
         make_dir(path)
 
     @staticmethod
-    def build_projects():
-        # todo: move into config
-        filename = "utils/dataset.csv"
+    def build_projects(count: int) -> []:
+        # return list
+        projects: [ProjectConfig] = []
 
-        # data set
-        dataset = parse_dataset(filename)
+        maven_crawler = Maven_Crawler(category="open-source/android")
+        # get the first page of Popular Projects
+        projects_maven_url = maven_crawler.list_projects()
 
-        # build
-        projects = []
-        for name, item in dataset.items():
-            # append
-            projects.append(
-                ProjectConfig(
-                    name=name,
-                    maven=item[0],
-                    github=item[1],
-                )
-            )
-        # return
-        return projects
+        # TODO remove this in production
+        #######################################################
+        file = open("GH_from_Maven.csv", "w")
+        fieldnames = ["No.", "maven", "usage", "github"]
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        writer.writeheader()
+        counter = 1
+        #######################################################
+
+        while True:
+            for project in projects_maven_url:
+                # TODO remove in production
+                ############################################################
+                tmp = {
+                    "No.": counter,
+                    "maven": project["link"],
+                    "usage": project["usage"],
+                    "github": "None",
+                }
+                ############################################################
+
+                # get GH link from .pom file
+                gh_url = maven_crawler.get_GH_url(project["link"])
+
+                # if GH link is found
+                if gh_url != "None" and gh_url:
+                    tmp["github"] = gh_url
+                    projects.append(
+                        ProjectConfig(
+                            name=project["link"].split("/")[-1],
+                            maven=project,
+                            github=gh_url,
+                        )
+                    )
+
+                # TODO remove in production
+                ############################################################
+                writer.writerow(tmp)
+                counter += 1
+                ############################################################
+
+                # if number of found projects with GH links reaches Count then break
+                if len(projects) >= count:
+                    file.close()
+                    return
+
+                # sleep to avoid being blocked
+                time.sleep(10)
+
+            # get the next 10 Projects
+            projects_maven_url = maven_crawler.list_projects()
+
+            if len(projects_maven_url) == 0:
+                file.close()
+                return
 
 
 @dataclass

@@ -26,9 +26,10 @@ class RepositoryGit(Repository):
         # init
         self.projects: [Project] = None
 
-    def build_projects(self, project_configs: [ProjectConfig]):
+    def build_projects(self, project_configs: {str: ProjectConfig}):
         self.projects = [
-            Project(item.name, item.maven, item.github) for item in project_configs
+            Project(item.name, item.maven, item.github)
+            for key, item in project_configs.items()
         ]
 
     def do_stuff(self, runner: Runner):

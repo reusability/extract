@@ -1,0 +1,11 @@
+No.,maven,usage,github
+1,https://mvnrepository.com/artifact/junit/junit,102014,https://github.com/junit-team/junit4.git
+2,https://mvnrepository.com/artifact/org.slf4j/slf4j-api,44625,None
+3,https://mvnrepository.com/artifact/org.scala-lang/scala-library,25618,https://github.com/scala/scala.git
+4,https://mvnrepository.com/artifact/com.google.guava/guava,24889,https://github.com/google/guava.git
+5,https://mvnrepository.com/artifact/org.mockito/mockito-core,20987,https://github.com/mockito/mockito.git
+6,https://mvnrepository.com/artifact/com.android.support/appcompat-v7,19790,None
+7,https://mvnrepository.com/artifact/commons-io/commons-io,19393,None
+8,https://mvnrepository.com/artifact/ch.qos.logback/logback-classic,18809,None
+9,https://mvnrepository.com/artifact/org.apache.commons/commons-lang3,17508,None
+10,https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind,16295,https://github.com/FasterXML/jackson-databind.git

@@ -5,10 +5,12 @@ import re as regex
 
 class Maven_Crawler:
     # class that crawls popular Maven projects.
-    def __init__(self, category="popular"):
+    def __init__(self, categories=["popular"]):
         self.base_url = "https://mvnrepository.com"
-        self.category = category
+        self.number_categories = len(categories)
+        self.categories = categories
         self.page = 1
+        self.current_category = 0
 
     def list_projects(self) -> []:
         """
@@ -20,10 +22,24 @@ class Maven_Crawler:
 
         # load page with current count (self.page)
         page = requests.get(
-            "{}/{}?p={}".format(self.base_url, self.category, self.page)
+            "{}/{}?p={}".format(
+                self.base_url, self.categories[self.current_category], self.page
+            )
         )
+
         if page.status_code == 404:
-            return projects_urls
+            self.current_category += 1
+            if self.current_category >= self.number_categories:
+                return projects_urls
+            else:
+                # TODO move this duplicated code
+                # load page with current count (self.page) after pointing to the next category
+                page = requests.get(
+                    "{}/{}?p={}".format(
+                        self.base_url, self.categories[self.current_category], self.page
+                    )
+                )
+
         # load html page
         html_page = BeautifulSoup(page.content, "html.parser")
 
@@ -35,14 +51,23 @@ class Maven_Crawler:
         for project in projects:
             # get the url for a project
             path = project.find("a")["href"]
-            # get total usage of a project
-            usage = (
-                project.find("h2", attrs={"class": "im-title"})
-                .find("a", attrs={"class": "im-usage"})
-                .find("b")
-            )
+            try:
+                # get total usage of a project
+                usage = (
+                    project.find("h2", attrs={"class": "im-title"})
+                    .find("a", attrs={"class": "im-usage"})
+                    .find("b")
+                    .contents[0]
+                )
+
+            except:  # noqa : E722
+                usage = "0"
+
             # construct the valid url
-            project_info = {"link": self.base_url + path, "usage": usage.contents[0]}
+            project_info = {
+                "link": self.base_url + path,
+                "usage": usage.replace(",", ""),
+            }
             projects_urls.append(project_info)
 
         # increase page number for check the next list in the next call of this method
@@ -137,8 +162,8 @@ class Maven_Crawler:
                         url = url[:-1]
                     last_part = url.split("/")[-1]
 
-                    # if last part of the url appears in the maven_project
-                    if last_part in project_name.split("/"):
+                    # if last part of the url is same as organization name
+                    if last_part == org_name:
                         check_start = regex.search("http", url)
                         if check_start:
                             url = url[check_start.start() :]  # noqa : E203

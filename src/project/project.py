@@ -140,7 +140,7 @@ class Project:
         # return list
         projects: [ProjectConfig] = []
 
-        maven_crawler = Maven_Crawler(category="open-source/android")
+        maven_crawler = Maven_Crawler(category="open-source/web-assets")
         # get the first page of Popular Projects
         projects_maven_url = maven_crawler.list_projects()
 
@@ -188,7 +188,7 @@ class Project:
                 # if number of found projects with GH links reaches Count then break
                 if len(projects) >= count:
                     file.close()
-                    return
+                    return projects
 
                 # sleep to avoid being blocked
                 time.sleep(10)
@@ -198,7 +198,7 @@ class Project:
 
             if len(projects_maven_url) == 0:
                 file.close()
-                return
+                return projects
 
 
 @dataclass

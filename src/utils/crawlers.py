@@ -105,6 +105,12 @@ class Maven_Crawler:
 
                 # for each matched result
                 for url in all_urls:
+                    # remove /tree/master
+                    tree_master = regex.search("/tree/master", url)
+                    if tree_master:
+                        url = url[: tree_master.start()]
+                        return url + ".git"
+
                     # if the matched contains `@git`
                     at_git = regex.search("git@github.com", url)
                     if at_git:

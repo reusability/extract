@@ -17,7 +17,7 @@ class Project:
         self.name = name
         self.maven: str = maven
         self.github: str = github
-        self.github_project_name: str = self.github.split("/")[-1]
+        self.github_project_name: str = self.github.split("/")[-1].split(".git")[0]
         # stores Maven releases (pandas dataFrame). col 0: release, col 2: usage, col 2: date
         self._releases: pd.DataFrame = None
         self._tags: [] = (
@@ -81,10 +81,11 @@ class Project:
 
     def _maven_reuse(self):
         # TODO move to Crawler repo
+        print(self.maven)
         data = crawl_maven_project(self.maven)
         # write the data to .csv file
         data_frame = {"release": [], "usage": [], "date": []}
-        for key, data in data.items():
+        for key, value in data.items():
             for minor in data[key]["releases"]:
                 data_frame["release"].append(minor["release"])
                 data_frame["usage"].append(int(minor["usage"].replace(",", "")))
@@ -174,7 +175,7 @@ class Project:
                     projects.append(
                         ProjectConfig(
                             name=project["link"].split("/")[-1],
-                            maven=project,
+                            maven=project["link"],
                             github=gh_url,
                         )
                     )

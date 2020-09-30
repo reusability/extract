@@ -58,7 +58,7 @@ def HelperAppBigQueryStorage():
 
 def HelperAppGitHub():
     name: str = "AppGitClone"
-    count: int = 100
+    count: int = 1
 
     # metrics
     # todo: inject source_code_dir as an environment variable

@@ -12,6 +12,23 @@ class Maven_Crawler:
         self.page = 1
         self.current_category = 0
 
+    def _request_page(self):
+        # load page with current count (self.page)
+        page = requests.get(
+            "{}/{}?p={}".format(
+                self.base_url, self.categories[self.current_category], self.page
+            )
+        )
+
+        # load html page
+        html_page = BeautifulSoup(page.content, "html.parser")
+
+        content = html_page.find("div", attrs={"id": "maincontent"})
+        # get all tags that stores projects info
+        projects = content.find_all("div", attrs={"class": "im"})
+
+        return projects
+
     def list_projects(self) -> []:
         """
         Crawl the list of Maven project in the given category
@@ -20,14 +37,9 @@ class Maven_Crawler:
         # return value
         projects_urls: [] = []
 
-        # load page with current count (self.page)
-        page = requests.get(
-            "{}/{}?p={}".format(
-                self.base_url, self.categories[self.current_category], self.page
-            )
-        )
+        projects = self._request_page()
 
-        if page.status_code == 404:
+        if len(projects) == 0:
             self.current_category += 1
             if self.current_category >= self.number_categories:
                 return projects_urls
@@ -35,19 +47,8 @@ class Maven_Crawler:
                 # TODO move this duplicated code
                 # load page with current count (self.page) after pointing to the next category
                 self.page = 1
-                page = requests.get(
-                    "{}/{}?p={}".format(
-                        self.base_url, self.categories[self.current_category], self.page
-                    )
-                )
+                projects = self._request_page()
 
-        # load html page
-        html_page = BeautifulSoup(page.content, "html.parser")
-
-        content = html_page.find("div", attrs={"id": "maincontent"})
-
-        # get all tags that stores projects info
-        projects = content.find_all("div", attrs={"class": "im"})
         # for each project listed
         for project in projects:
             # get the url for a project

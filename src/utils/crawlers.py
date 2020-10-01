@@ -34,6 +34,7 @@ class Maven_Crawler:
             else:
                 # TODO move this duplicated code
                 # load page with current count (self.page) after pointing to the next category
+                self.page = 1
                 page = requests.get(
                     "{}/{}?p={}".format(
                         self.base_url, self.categories[self.current_category], self.page
@@ -75,7 +76,7 @@ class Maven_Crawler:
         return projects_urls
 
     @staticmethod
-    def get_GH_url(maven_project) -> str:
+    def get_GH_url(maven_project) -> str:  # noqa : C901
         """
         This method is used to retrieve Github link of a given Maven project by accessing the .pom file of one of the
         releases
@@ -172,7 +173,7 @@ class Maven_Crawler:
                 return "None"
 
 
-def crawl_maven_project(project_url):
+def crawl_maven_project(project_url):  # noqa : C901
     """
     This function is used to get Maven usage of all releases of a given project.
 

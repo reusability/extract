@@ -15,9 +15,12 @@ class RunnerCK(Runner):
         # init
         super().__init__(config)
 
+    # variablesAndFields:False
     def Run(self, project_directory, move_output=False, output_source=None):
         # create the command
-        command = "java -jar {} {}".format(
+        # looking at CK source code, the parse arguments by index not by identifier
+        # https://github.com/mauricioaniche/ck/blob/master/src/main/java/com/github/mauricioaniche/ck/Runner.java
+        command = "java -jar {} {} false 0 false".format(
             self.config.metrics_runner_file, project_directory
         )
         subprocess = Subprocess(command)

@@ -9,7 +9,8 @@ from .github import RepositoryGit  # noqa: F401
 from .github import RepositoryConfigGit  # noqa: F401
 
 # project
-from .project import Project  # noqa: F401
+from src.repository.project.project import Project  # noqa: F401
+from src.repository.project.project import ProjectConfig  # noqa: F401
 
 # project commands
 from .utils.command import command_git_tag  # noqa: F401

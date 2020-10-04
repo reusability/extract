@@ -48,6 +48,9 @@ class AppGitHub(App):
         # init
         super().__init__(config)
 
+        # setup projects
+        self.repository.build_projects(config.projects_config)
+
     def Run(self):
         # do stuff
         self.repository.do_stuff(self.metric)

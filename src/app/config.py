@@ -8,7 +8,7 @@ from src.metrics import Runner
 # repository
 from src.repository import Repository
 from src.repository import RepositoryConfig
-
+from src.repository import ProjectConfig
 
 # todo: encapsulate metric and repository config injection into their respective classes
 @dataclass
@@ -22,4 +22,4 @@ class AppConfig:
 class AppConfigRepository(AppConfig):
     repository: Repository
     repository_config: RepositoryConfig
-    projects_configs: None
+    projects_config: [ProjectConfig]

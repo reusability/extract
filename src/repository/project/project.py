@@ -5,8 +5,8 @@ import pandas as pd
 import time
 import csv
 
-from .utils.command import command_git_tag_checkout
-from .utils.preprocess import (
+from src.repository.utils.command import command_git_tag_checkout
+from src.repository.utils.preprocess import (
     preprocess_github_tags,
     preprocess_match_maven_tags,
     preprocess_maven_reuse,

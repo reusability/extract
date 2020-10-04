@@ -1,6 +1,6 @@
 # helpers.py
 # repository
-from src.repository.project import Project
+from src.repository.project.project import Project
 from src.repository import RepositoryGit
 from src.repository.github import RepositoryConfigGitHub
 
@@ -47,7 +47,7 @@ def HelperAppGitHubCK():
         metric_config=RunnerMetricConfigCK,
         repository=RepositoryGit,
         repository_config=RepositoryConfigGitHub,
-        projects_configs=Project.build_projects(count),
+        projects_config=Project.build_projects(count),
     )
 
     app = AppGitHub(config_ck)

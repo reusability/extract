@@ -5,8 +5,7 @@ from .config import AppConfigRepository
 
 from src.utils import Logger
 
-# from src.utils import make_dir
-# from src.utils import remove_dir
+# from src.utils import Zip_Folder, copy_files
 # from pathlib import Path
 
 
@@ -77,3 +76,11 @@ class AppRepositoryGitHub(AppRepositoryBigQuery):
     def Run(self):
         # do stuff
         self.repository.do_stuff(self.metric)
+
+        # TODO: make this as an option
+        # Zip_Folder("{}/src/outputs".format(
+        #     str(Path().resolve().parent)
+        # ))
+        #
+        # http_dir = '/var/www/html/output'
+        # copy_files(source="outputs.zip", target=http_dir)

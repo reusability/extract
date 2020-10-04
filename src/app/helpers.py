@@ -18,9 +18,8 @@ from .config import AppConfigRepository
 from .index import App, AppRepositoryGitHub
 
 # others
-from src.project import ProjectConfigGson
-from src.metrics import RunnerMetricConfig, RunnerSourceMeter
-import os
+from src.project import Project
+from src.metrics import RunnerMetricConfig, RunnerCK
 
 
 def HelperAppBigQueryAPI():
@@ -59,21 +58,22 @@ def HelperAppBigQueryStorage():
 
 def HelperAppGitHub():
     name: str = "AppGitClone"
+    count: int = 5
 
     # metrics
     # todo: inject source_code_dir as an environment variable
     metric_config = RunnerMetricConfig(
-        name="SM", metrics_runner_file=os.getenv("sourceMeter_path"), move_output=False
+        name="ck", metrics_runner_file="utils/ck.jar", move_output=True
     )
 
     # projects
     # todo: use mvn script to init this project_config
-    project_config = [ProjectConfigGson]
+    project_config = Project.build_projects(count)
 
     # config app -- github
     config_app_github = AppConfigRepository(
         name=name,
-        metric=RunnerSourceMeter,
+        metric=RunnerCK,
         metric_config=metric_config,
         repository=RepositoryGit,
         repository_config=RepositoryConfigGitHub,

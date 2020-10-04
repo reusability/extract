@@ -22,3 +22,4 @@ class AppConfig:
 class AppConfigRepository(AppConfig):
     repository: Repository
     repository_config: RepositoryConfig
+    projects_configs: None

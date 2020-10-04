@@ -1,13 +1,13 @@
 from src.metrics import Runner
 
-from src.project import Project
+from src.repository.project.project import Project
 
 from .index import Repository
 from .index import RepositoryConfig
 from dataclasses import dataclass
 import time
 
-from ..project.project import ProjectConfig
+from src.repository.project.project import ProjectConfig
 
 # utils
 from pathlib import Path
@@ -78,4 +78,4 @@ class RepositoryGit(Repository):
             time.sleep(seconds)
 
 
-RepositoryConfigGitHub = RepositoryConfigGit(dbType=2, placeholder=0)
+RepositoryConfigGitHub = RepositoryConfigGit(dbType=0, placeholder=0)

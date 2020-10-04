@@ -1,85 +1,55 @@
 # helpers.py
-# big query
+# repository
+from src.repository.project.project import Project
+from src.repository import RepositoryGit
 from src.repository.github import RepositoryConfigGitHub
 
-from src.repository import RepositoryBigQuery
-from src.repository import RepositoryBigQueryStorage
-from src.repository import RepositoryConfigBigQueryAPI
-from src.repository import RepositoryConfigBigQueryStorage
-
-# git
-from src.repository import RepositoryGit
-
 # config
-from .config import AppConfig
 from .config import AppConfigRepository
 
 # apps
-from .index import App, AppRepositoryGitHub
+from .index import AppGitHub
 
 # others
-from src.project import Project
-from src.metrics import RunnerMetricConfig, RunnerCK
+from src.metrics import RunnerMetricConfigSM
+from src.metrics import RunnerMetricConfigCK
+from src.metrics import RunnerSM
+from src.metrics import RunnerCK
 
 
-def HelperAppBigQueryAPI():
-    name: str = "AppBigQueryAPI"
-
-    # init
-    config_app_big_query_api = AppConfig(
-        name=name,
-        repository=RepositoryBigQuery,
-        repository_config=RepositoryConfigBigQueryAPI,
-    )
-
-    # create src
-    app = App(config_app_big_query_api)
-
-    # return
-    return app
-
-
-def HelperAppBigQueryStorage():
-    name: str = "AppBigQueryStorage"
-
-    # init
-    config_app_big_query_storage = AppConfig(
-        name=name,
-        repository=RepositoryBigQueryStorage,
-        repository_config=RepositoryConfigBigQueryStorage,
-    )
-
-    # create src
-    app = App(config_app_big_query_storage)
-
-    # return
-    return app
-
-
-def HelperAppGitHub():
-    name: str = "AppGitClone"
-    count: int = 5
-
-    # metrics
-    # todo: inject source_code_dir as an environment variable
-    metric_config = RunnerMetricConfig(
-        name="ck", metrics_runner_file="utils/ck.jar", move_output=True
-    )
-
-    # projects
-    # todo: use mvn script to init this project_config
-    project_config = Project.build_projects(count)
+def HelperAppGitHubSM():
+    name: str = "AppGitHubSourceMeter"
+    count: int = 10
 
     # config app -- github
-    config_app_github = AppConfigRepository(
+    config_sm = AppConfigRepository(
         name=name,
-        metric=RunnerCK,
-        metric_config=metric_config,
+        metric=RunnerSM,
+        metric_config=RunnerMetricConfigSM,
         repository=RepositoryGit,
         repository_config=RepositoryConfigGitHub,
-        projects_config=project_config,
+        projects_configs=Project.build_projects(count),
     )
 
-    app = AppRepositoryGitHub(config_app_github)
+    app = AppGitHub(config_sm)
+
+    return app
+
+
+def HelperAppGitHubCK():
+    name: str = "AppGitHubCK"
+    count: int = 10
+
+    # config app -- github
+    config_ck = AppConfigRepository(
+        name=name,
+        metric=RunnerCK,
+        metric_config=RunnerMetricConfigCK,
+        repository=RepositoryGit,
+        repository_config=RepositoryConfigGitHub,
+        projects_config=Project.build_projects(count),
+    )
+
+    app = AppGitHub(config_ck)
 
     return app

@@ -1,5 +1,7 @@
 # helpers.py
 # repository
+from src.project import Project
+
 from src.repository import RepositoryGit
 from src.repository.github import RepositoryConfigGitHub
 
@@ -18,6 +20,7 @@ from src.metrics import RunnerCK
 
 def HelperAppGitHubSM():
     name: str = "AppGitHubSourceMeter"
+    count: int = 10
 
     # config app -- github
     config_sm = AppConfigRepository(
@@ -26,6 +29,7 @@ def HelperAppGitHubSM():
         metric_config=RunnerMetricConfigSM,
         repository=RepositoryGit,
         repository_config=RepositoryConfigGitHub,
+        project=Project.build_projects(count),
     )
 
     app = AppGitHub(config_sm)
@@ -35,6 +39,7 @@ def HelperAppGitHubSM():
 
 def HelperAppGitHubCK():
     name: str = "AppGitHubCK"
+    count: int = 10
 
     # config app -- github
     config_ck = AppConfigRepository(
@@ -43,6 +48,7 @@ def HelperAppGitHubCK():
         metric_config=RunnerMetricConfigCK,
         repository=RepositoryGit,
         repository_config=RepositoryConfigGitHub,
+        project=Project.build_projects(count),
     )
 
     app = AppGitHub(config_ck)

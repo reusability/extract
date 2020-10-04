@@ -28,7 +28,7 @@ def HelperAppGitHubSM():
         metric_config=RunnerMetricConfigSM,
         repository=RepositoryGit,
         repository_config=RepositoryConfigGitHub,
-        projects_configs=Project.build_projects(count),
+        projects_config=Project.build_projects(count),
     )
 
     app = AppGitHub(config_sm)

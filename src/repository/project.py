@@ -5,8 +5,8 @@ import pandas as pd
 import time
 import csv
 
-from src.project.utils.command import command_git_tag_checkout
-from src.project.utils.preprocess import (
+from .utils.command import command_git_tag_checkout
+from .utils.preprocess import (
     preprocess_github_tags,
     preprocess_match_maven_tags,
     preprocess_maven_reuse,
@@ -156,20 +156,7 @@ class ProjectConfig:
     github: str
 
 
-ProjectConfigScala = ProjectConfig(
-    name="scala",
-    maven="https://mvnrepository.com/artifact/org.scala-lang/scala-library",
-    github="https://github.com/scala/scala.git",
-)
-
-ProjectConfigGson = ProjectConfig(
-    name="gson",
-    maven="https://mvnrepository.com/artifact/com.google.code.gson/gson",
-    github="https://github.com/google/gson.git",
-)
-
-ProjectConfigOkHttp = ProjectConfig(
-    name="okhttp",
-    maven="https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp",
-    github="https://github.com/square/okhttp",
-)
+@dataclass
+class Match_Maven_GH:
+    gh_tag: str
+    maven_release: str

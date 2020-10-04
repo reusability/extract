@@ -1,6 +1,11 @@
+# general
 from dataclasses import dataclass
-from src.metrics import RunnerMetricConfig, Runner
-from src.project.project import ProjectConfig
+
+# metrics
+from src.metrics import RunnerMetricConfig
+from src.metrics import Runner
+
+# repository
 from src.repository import Repository
 from src.repository import RepositoryConfig
 
@@ -17,4 +22,3 @@ class AppConfig:
 class AppConfigRepository(AppConfig):
     repository: Repository
     repository_config: RepositoryConfig
-    projects_config: [ProjectConfig]

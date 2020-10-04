@@ -1,16 +1,54 @@
 import requests
 from bs4 import BeautifulSoup
 import re as regex
+import time
+
+EXCLUSION_LIST = [
+    "popular",
+    "open-source/testing-frameworks",
+    "open-source/json-libraries",
+    "open-source/core-utilities",
+    "open-source/mocking",
+    "open-source/web-assets",
+]
 
 
 class Maven_Crawler:
     # class that crawls popular Maven projects.
-    def __init__(self, categories=["popular"]):
+    def __init__(self):
         self.base_url = "https://mvnrepository.com"
-        self.number_categories = len(categories)
-        self.categories = categories
+        self.categories = self._get_categories()
+        self.number_categories = len(self.categories)
         self.page = 1
         self.current_category = 0
+
+    def _get_categories(self):
+        # TODO: make this abstract to be used with project_list crawler
+        curr_page = 1
+        suffix = "open-source"
+        categories = []
+        while True:
+            page = requests.get("{}/{}?p={}".format(self.base_url, suffix, curr_page))
+
+            if page.status_code == 404:
+                return categories
+
+            html_page = BeautifulSoup(page.content, "html.parser")
+            content = html_page.find("div", attrs={"id": "maincontent"})
+
+            list_categories = content.find_all("h4")
+
+            if len(list_categories) == 0:
+                return categories
+
+            for category in list_categories:
+                path = category.find("a")["href"][1:]
+                if path not in EXCLUSION_LIST:
+                    categories.append(path)
+                    print(path)
+
+            curr_page += 1
+            time.sleep(5)
 
     def _request_page(self):
         # load page with current count (self.page)

@@ -89,14 +89,7 @@ class Project:
         projects: {str: ProjectConfig} = {}
         MINIMUM_MAVEN_USAGES = 50
 
-        CATEGORIES = [
-            "popular",
-            "open-source/testing-frameworks",
-            "open-source/json-libraries",
-            "open-source/mocking",
-        ]
-
-        maven_crawler = Maven_Crawler(categories=CATEGORIES)
+        maven_crawler = Maven_Crawler()
         # get the first page of Popular Projects
         projects_maven_url = maven_crawler.list_projects()
 

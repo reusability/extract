@@ -1,6 +1,4 @@
 # general
-import os
-
 # utils.py
 from src.utils import Subprocess
 from src.utils import copy_files
@@ -44,5 +42,5 @@ class RunnerCK(Runner):
 
 
 RunnerMetricConfigCK = RunnerMetricConfig(
-    name="CK", metrics_runner_file=os.getenv("ck_path"), move_output=True
+    name="CK", metrics_runner_file="utils/jar/ck.jar", move_output=True
 )

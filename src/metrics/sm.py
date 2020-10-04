@@ -1,6 +1,4 @@
 # general
-import os
-
 # utils.py
 from src.utils import Subprocess
 from src.utils import copy_files
@@ -45,5 +43,5 @@ class RunnerSM(Runner):
 
 
 RunnerMetricConfigSM = RunnerMetricConfig(
-    name="SM", metrics_runner_file=os.getenv("sm_path"), move_output=False
+    name="SM", metrics_runner_file="utils/jar/sm.jar", move_output=False
 )

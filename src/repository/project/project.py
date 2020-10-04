@@ -84,17 +84,25 @@ class Project:
         make_dir(path)
 
     @staticmethod
-    def build_projects(count: int = 1) -> []:
+    def build_projects(count: int = 1) -> {}:
         # return list
-        projects: [ProjectConfig] = []
+        projects: {str: ProjectConfig} = {}
+        MINIMUM_MAVEN_USAGES = 50
 
-        maven_crawler = Maven_Crawler(category="open-source/web-assets")
+        CATEGORIES = [
+            "popular",
+            "open-source/testing-frameworks",
+            "open-source/json-libraries",
+            "open-source/mocking",
+        ]
+
+        maven_crawler = Maven_Crawler(categories=CATEGORIES)
         # get the first page of Popular Projects
         projects_maven_url = maven_crawler.list_projects()
 
         # TODO remove this in production
         #######################################################
-        file = open("GH_from_Maven.csv", "w")
+        file = open("utils/GH_from_Maven.csv", "w")
         fieldnames = ["No.", "maven", "usage", "github"]
         writer = csv.DictWriter(file, fieldnames=fieldnames)
         writer.writeheader()
@@ -117,15 +125,20 @@ class Project:
                 gh_url = maven_crawler.get_GH_url(project["link"])
 
                 # if GH link is found
-                if gh_url != "None" and gh_url:
+                if (
+                    gh_url != "None"
+                    and gh_url  # noqa : W503
+                    and int(project["usage"]) > MINIMUM_MAVEN_USAGES  # noqa : W503
+                ):
                     tmp["github"] = gh_url
-                    projects.append(
-                        ProjectConfig(
-                            name=project["link"].split("/")[-1],
-                            maven=project["link"],
-                            github=gh_url,
-                        )
+
+                    project_config = ProjectConfig(
+                        name=project["link"].split("/")[-1],
+                        maven=project["link"],
+                        github=gh_url,
                     )
+                    if project_config not in projects.keys():
+                        projects[project_config] = project_config
 
                 # TODO remove in production
                 ############################################################
@@ -154,6 +167,9 @@ class ProjectConfig:
     name: str
     maven: str
     github: str
+
+    def __hash__(self):
+        return hash(self.name + self.maven + self.github)
 
 
 @dataclass

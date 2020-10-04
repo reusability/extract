@@ -19,6 +19,7 @@ class RunnerCK(Runner):
         # init
         super().__init__(config)
 
+    # variablesAndFields:False
     def Run(self, project_directory, move_output=False, output_source=None):
         # build metrics
         self._generate_metrics(project_directory)
@@ -28,8 +29,10 @@ class RunnerCK(Runner):
             self._move_output(output_source)
 
     def _generate_metrics(self, project_directory):
-        # create command
-        command = "java -jar {} {}".format(
+        # create the command
+        # looking at CK source code, the parse arguments by index not by identifier
+        # https://github.com/mauricioaniche/ck/blob/master/src/main/java/com/github/mauricioaniche/ck/Runner.java
+        command = "java -jar {} {} false 0 false".format(
             self.config.metrics_runner_file, project_directory
         )
 

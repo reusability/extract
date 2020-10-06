@@ -55,37 +55,28 @@ import click
 #   - GHTorrent
 # - automate yaml config pipeline
 #   - fetch projects from maven based on reuse
-#
-# updated todos list
-# pre-mining and mining
-# 1. manually fetch projects from mvn
-#   - find their reference in github
-#   - find their associated tags
-# 2. mine the repositories
-#   - git clone projects[i].github
-#   while hasTagsLeft(projects[i]):
-#   - git checkout tags/projects[i].tags[j]
-#   - mkdir outputs/scala
-#   - pipeline management (java files) --- extras; documentation, etc
-#       - run ck metrics on that project
-#       - output into csv
-#       - bundle csv in the format %projects[i]-tags[j]
-#           - cp class.csv ../outputs/projects[i]/tags[j]
-#           - cp projects.csv ../outputs/projects[i]/tags[j]
-#   - append the csv path into an array list
-#
-# requirements - week 7
-#   - P1 - incorporate Matthew's Python script
-#   - P1 - tag
-#   - P2 - EC2 + S3 object
-#   - P3 - source meter documentation
 
 
 @click.command()
 @click.option("--metrics", default="ck", help="ck metrics or sourcemeter; ck or sm")
-def main(metrics):
+@click.option("--count", default=5, help="number of projects to fetch", type=click.INT)
+@click.option(
+    "--sleep", default=2, help="time to sleep between fetches", type=click.INT
+)
+@click.option(
+    "--mavenusage", default=10, help="minimum maven usage to fetch", type=click.INT
+)
+def main(metrics, count, sleep, mavenusage):
     # init
-    app = build_app(metrics)
+    categories = [
+        "popular",
+        "open-source/testing-frameworks",
+        "open-source/json-libraries",
+        "open-source/mocking",
+    ]
+
+    # init
+    app = build_app(metrics, count, sleep, categories, mavenusage)
 
     # run
     app.Run()
@@ -94,12 +85,12 @@ def main(metrics):
     app.Stop()
 
 
-def build_app(metrics):
+def build_app(metrics, count, sleep, categories, mavenusage):
     # todo: clean up
     if metrics == "ck":
-        app = HelperAppGitHubCK()
+        app = HelperAppGitHubCK(count, sleep, categories, mavenusage)
     elif metrics == "sm":
-        app = HelperAppGitHubSM()
+        app = HelperAppGitHubSM(count, sleep, categories, mavenusage)
     else:
         raise ValueError("the metrics is not found")
 

@@ -2,7 +2,6 @@
 from dataclasses import dataclass
 from pathlib import Path
 import pandas as pd
-import time
 import csv
 
 from src.repository.utils.command import command_git_tag_checkout
@@ -84,42 +83,36 @@ class Project:
         make_dir(path)
 
     @staticmethod
-    def build_projects(count: int = 1) -> {}:
-        # return list
+    def build_projects(count, categories, min_maven_usage) -> {}:
+        # init
         projects: {str: ProjectConfig} = {}
-        MINIMUM_MAVEN_USAGES = 50
 
-        CATEGORIES = [
-            "popular",
-            "open-source/testing-frameworks",
-            "open-source/json-libraries",
-            "open-source/mocking",
-        ]
+        # maven crawler
+        maven_crawler = Maven_Crawler(categories=categories)
 
-        maven_crawler = Maven_Crawler(categories=CATEGORIES)
-        # get the first page of Popular Projects
-        projects_maven_url = maven_crawler.list_projects()
-
-        # TODO remove this in production
-        #######################################################
+        # open file
         file = open("utils/GH_from_Maven.csv", "w")
+
+        # init
         fieldnames = ["No.", "maven", "usage", "github"]
         writer = csv.DictWriter(file, fieldnames=fieldnames)
         writer.writeheader()
         counter = 1
-        #######################################################
 
-        while True:
+        # star
+        while len(projects) < count:
+            projects_maven_url = maven_crawler.list_projects()
+
+            if len(projects_maven_url) == 0:
+                break
+
             for project in projects_maven_url:
-                # TODO remove in production
-                ############################################################
                 tmp = {
                     "No.": counter,
                     "maven": project["link"],
                     "usage": project["usage"],
                     "github": "None",
                 }
-                ############################################################
 
                 # get GH link from .pom file
                 gh_url = maven_crawler.get_GH_url(project["link"])
@@ -128,7 +121,7 @@ class Project:
                 if (
                     gh_url != "None"
                     and gh_url  # noqa : W503
-                    and int(project["usage"]) > MINIMUM_MAVEN_USAGES  # noqa : W503
+                    and int(project["usage"]) > min_maven_usage  # noqa : W503
                 ):
                     tmp["github"] = gh_url
 
@@ -137,29 +130,19 @@ class Project:
                         maven=project["link"],
                         github=gh_url,
                     )
+
                     if project_config not in projects.keys():
                         projects[project_config] = project_config
 
-                # TODO remove in production
-                ############################################################
                 writer.writerow(tmp)
                 counter += 1
-                ############################################################
 
-                # if number of found projects with GH links reaches Count then break
-                if len(projects) >= count:
-                    file.close()
-                    return projects
+                if len(projects) == count:
+                    break
 
-                # sleep to avoid being blocked
-                time.sleep(10)
+        file.close()
 
-            # get the next 10 Projects
-            projects_maven_url = maven_crawler.list_projects()
-
-            if len(projects_maven_url) == 0:
-                file.close()
-                return projects
+        return projects
 
 
 @dataclass

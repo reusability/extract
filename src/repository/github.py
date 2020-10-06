@@ -16,7 +16,7 @@ from ..utils import remove_dir
 
 @dataclass
 class RepositoryConfigGit(RepositoryConfig):
-    placeholder: int
+    sleep: int
 
 
 class RepositoryGit(Repository):
@@ -73,9 +73,5 @@ class RepositoryGit(Repository):
             )
 
             # sleep between projects
-            seconds = 10
-            print("Sleeping for {}".format((seconds)))
-            time.sleep(seconds)
-
-
-RepositoryConfigGitHub = RepositoryConfigGit(dbType=0, placeholder=0)
+            print("Sleeping for {}".format((self.config.sleep)))
+            time.sleep(self.config.sleep)

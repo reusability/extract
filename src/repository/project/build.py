@@ -15,7 +15,7 @@ def build_projects(count, categories, min_maven_usage) -> {}:
     file = open("outputs/etc/maven.csv", "a+")
 
     # init
-    fieldnames = ["No.", "maven", "usage", "github"]
+    fieldnames = ["id", "maven", "usage", "github"]
     writer = csv.DictWriter(file, fieldnames=fieldnames)
     writer.writeheader()
     counter = 1
@@ -29,7 +29,7 @@ def build_projects(count, categories, min_maven_usage) -> {}:
 
         for project in projects_maven_url:
             tmp = {
-                "No.": counter,
+                "id": counter,
                 "maven": project["link"],
                 "usage": project["usage"],
                 "github": "None",

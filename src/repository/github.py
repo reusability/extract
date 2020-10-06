@@ -26,7 +26,7 @@ class RepositoryGit(Repository):
         # init
         self.projects: [Project] = None
 
-    def build_projects(self, project_configs: {str: ProjectConfig}):
+    def set_projects(self, project_configs: {str: ProjectConfig}):
         self.projects = [
             Project(item.name, item.maven, item.github)
             for key, item in project_configs.items()

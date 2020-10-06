@@ -2,7 +2,6 @@
 from dataclasses import dataclass
 from pathlib import Path
 import pandas as pd
-import csv
 
 from src.repository.utils.command import command_git_tag_checkout
 from src.repository.utils.preprocess import (
@@ -12,7 +11,6 @@ from src.repository.utils.preprocess import (
 )
 from src.utils import Subprocess
 from src.utils import make_dir
-from src.utils import Maven_Crawler
 
 
 class Project:
@@ -81,68 +79,6 @@ class Project:
     @staticmethod
     def make_dir(path):
         make_dir(path)
-
-    @staticmethod
-    def build_projects(count, categories, min_maven_usage) -> {}:
-        # init
-        projects: {str: ProjectConfig} = {}
-
-        # maven crawler
-        maven_crawler = Maven_Crawler(categories=categories)
-
-        # open file
-        file = open("utils/GH_from_Maven.csv", "w")
-
-        # init
-        fieldnames = ["No.", "maven", "usage", "github"]
-        writer = csv.DictWriter(file, fieldnames=fieldnames)
-        writer.writeheader()
-        counter = 1
-
-        # star
-        while len(projects) < count:
-            projects_maven_url = maven_crawler.list_projects()
-
-            if len(projects_maven_url) == 0:
-                break
-
-            for project in projects_maven_url:
-                tmp = {
-                    "No.": counter,
-                    "maven": project["link"],
-                    "usage": project["usage"],
-                    "github": "None",
-                }
-
-                # get GH link from .pom file
-                gh_url = maven_crawler.get_GH_url(project["link"])
-
-                # if GH link is found
-                if (
-                    gh_url != "None"
-                    and gh_url  # noqa : W503
-                    and int(project["usage"]) > min_maven_usage  # noqa : W503
-                ):
-                    tmp["github"] = gh_url
-
-                    project_config = ProjectConfig(
-                        name=project["link"].split("/")[-1],
-                        maven=project["link"],
-                        github=gh_url,
-                    )
-
-                    if project_config not in projects.keys():
-                        projects[project_config] = project_config
-
-                writer.writerow(tmp)
-                counter += 1
-
-                if len(projects) == count:
-                    break
-
-        file.close()
-
-        return projects
 
 
 @dataclass

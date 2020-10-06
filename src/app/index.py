@@ -7,6 +7,7 @@ from .config import AppConfigRepository
 
 # utils.py
 from src.utils import Logger
+from ..repository.project.build import build_projects
 
 
 class App:
@@ -49,7 +50,7 @@ class AppGitHub(App):
         super().__init__(config)
 
         # setup projects
-        self.repository.build_projects(config.projects_config)
+        build_projects(config.projects_config)
 
     def Run(self):
         # do stuff

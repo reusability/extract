@@ -2,14 +2,15 @@ import csv
 
 from src.repository import ProjectConfig
 from src.utils import Maven_Crawler
+import time
 
 
-def build_projects(count, categories, min_maven_usage) -> {}:
+def build_projects(count, categories, min_maven_usage, sleep) -> {}:
     # init
     projects: {str: ProjectConfig} = {}
 
     # maven crawler
-    maven_crawler = Maven_Crawler(categories=categories)
+    maven_crawler = Maven_Crawler(sleep=sleep)
 
     # open file
     file = open("outputs/etc/maven.csv", "a+")
@@ -61,6 +62,7 @@ def build_projects(count, categories, min_maven_usage) -> {}:
             if len(projects) == count:
                 break
 
+            time.sleep(sleep)
     file.close()
 
-    return projects
+    return

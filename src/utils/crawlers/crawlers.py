@@ -15,9 +15,13 @@ EXCLUSION_LIST = [
 
 class Maven_Crawler:
     # class that crawls popular Maven projects.
-    def __init__(self):
+    def __init__(self, sleep, categories=None):
         self.base_url = "https://mvnrepository.com"
-        self.categories = self._get_categories()
+        self.sleep = sleep
+        if categories:
+            self.categories = categories
+        else:
+            self.categories = self._get_categories()
         self.number_categories = len(self.categories)
         self.page = 1
         self.current_category = 0
@@ -45,10 +49,9 @@ class Maven_Crawler:
                 path = category.find("a")["href"][1:]
                 if path not in EXCLUSION_LIST:
                     categories.append(path)
-                    print(path)
 
             curr_page += 1
-            time.sleep(5)
+            time.sleep(self.sleep)
 
     def _request_page(self):
         # load page with current count (self.page)

@@ -31,7 +31,7 @@ def HelperAppGitHubSM(count, sleep, categories, min_maven_usage):
         metric_config=RunnerMetricConfigSM,
         repository=RepositoryGit,
         repository_config=RepositoryConfigGitHub,
-        projects_config=build_projects(count, categories, min_maven_usage),
+        projects_config=build_projects(count, categories, min_maven_usage, sleep),
     )
 
     # build app
@@ -55,7 +55,7 @@ def HelperAppGitHubCK(count, sleep, categories, min_maven_usage):
         metric_config=RunnerMetricConfigCK,
         repository=RepositoryGit,
         repository_config=RepositoryConfigGitHub,
-        projects_config=build_projects(count, categories, min_maven_usage),
+        projects_config=build_projects(count, categories, min_maven_usage, sleep),
     )
 
     # build app

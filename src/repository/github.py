@@ -1,13 +1,13 @@
 from src.metrics import Runner
 
-from src.project import Project
+from src.repository.project.project import Project
 
 from .index import Repository
 from .index import RepositoryConfig
 from dataclasses import dataclass
 import time
 
-from ..project.project import ProjectConfig
+from src.repository.project.project import ProjectConfig
 
 # utils
 from pathlib import Path
@@ -16,7 +16,7 @@ from ..utils import remove_dir
 
 @dataclass
 class RepositoryConfigGit(RepositoryConfig):
-    placeholder: int
+    sleep: int
 
 
 class RepositoryGit(Repository):
@@ -26,7 +26,7 @@ class RepositoryGit(Repository):
         # init
         self.projects: [Project] = None
 
-    def build_projects(self, project_configs: {str: ProjectConfig}):
+    def set_projects(self, project_configs: {str: ProjectConfig}):
         self.projects = [
             Project(item.name, item.maven, item.github)
             for key, item in project_configs.items()
@@ -73,9 +73,5 @@ class RepositoryGit(Repository):
             )
 
             # sleep between projects
-            seconds = 10
-            print("Sleeping for {}".format((seconds)))
-            time.sleep(seconds)
-
-
-RepositoryConfigGitHub = RepositoryConfigGit(dbType=2, placeholder=0)
+            print("Sleeping for {}".format((self.config.sleep)))
+            time.sleep(self.config.sleep)

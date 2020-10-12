@@ -162,14 +162,23 @@ class Maven_Crawler:
                 xml_content = str(BeautifulSoup(content.content, "lxml"))
 
                 # get everything starts with `git or http` and ends with `.com<`
-                pat = regex.compile("[git|http].*github\.com.*<")  # noqa : W605
+                pat = regex.compile(">[git|http].*github\.com.*<")  # noqa : W605
                 all_urls = regex.findall(pat, xml_content)
 
+                all_urls = [x.split(">") for x in all_urls]
+                all_urls = [
+                    item for sublist in all_urls for item in sublist if (len(item) > 3)
+                ]
                 # remove the `<` symbol
-                all_urls = [x[:-1] for x in all_urls]
+                for x in range(len(all_urls)):
+                    if all_urls[x][0] == ">":
+                        all_urls[x] = all_urls[x][1:]
+                    if all_urls[x][-1] == "<":
+                        all_urls[x] = all_urls[x][:-1]
 
                 # for each matched result
                 for url in all_urls:
+                    # print(url)
                     # remove /tree/master
                     tree_master = regex.search("/tree/master", url)
                     if tree_master:
@@ -181,10 +190,16 @@ class Maven_Crawler:
                     if at_git:
                         url = url.replace(":", "/")
                         end_git = regex.search("\.git", url)  # noqa : W605
-                        add_https = (
-                            "https://github.com"
-                            + url[at_git.end() : end_git.end()]  # noqa : E203
-                        )
+                        if end_git:
+                            add_https = (
+                                "https://github.com"
+                                + url[at_git.end() : end_git.end()]  # noqa : E203
+                            )
+                        else:
+                            add_https = (
+                                "https://github.com"
+                                + url[at_git.end() :]  # noqa : E203
+                            )
                         return add_https
 
                     # if the matched url ends with `.git`
@@ -207,7 +222,7 @@ class Maven_Crawler:
                         check_start = regex.search("http", url)
                         if check_start:
                             url = url[check_start.start() :]  # noqa : E203
-                        return url + ".git"
+                            return url + ".git"
 
                 return "None"
 

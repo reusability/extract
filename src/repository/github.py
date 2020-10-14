@@ -17,6 +17,7 @@ from ..utils import remove_dir
 @dataclass
 class RepositoryConfigGit(RepositoryConfig):
     sleep: int
+    versions: int
 
 
 class RepositoryGit(Repository):
@@ -33,10 +34,11 @@ class RepositoryGit(Repository):
         ]
 
     def do_stuff(self, runner: Runner):
+
         for project in self.projects:
             # clone
             project.setup()
-
+            counter = 0
             # for each tag in project.matched_maven_github releases
             for release in project.matched_maven_gh:
                 # init
@@ -65,7 +67,9 @@ class RepositoryGit(Repository):
                         + "/{}".format(project.github_project_name)  # noqa : W503
                     )
 
-                break
+                counter += 1
+                if counter == self.config.versions:
+                    break
             # remove project
             # TODO i had to add another dependency to remove the project
             remove_dir(

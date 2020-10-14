@@ -1,25 +1,32 @@
 import csv
+import time
 
 from src.repository import ProjectConfig
 from src.utils import Maven_Crawler
-import time
+from src.repository.utils import cache
+
+MAVEN_CSV_PATH = "outputs/etc/maven.csv"
 
 
 def build_projects(count, categories, min_maven_usage, sleep) -> {}:
     # init
     projects: {str: ProjectConfig} = {}
 
-    # maven crawler
-    maven_crawler = Maven_Crawler(sleep=sleep)
-
     # open file
-    file = open("outputs/etc/maven.csv", "a+")
-
-    # init
+    file = open(MAVEN_CSV_PATH, "a+")
     fieldnames = ["id", "maven", "usage", "github"]
     writer = csv.DictWriter(file, fieldnames=fieldnames)
-    writer.writeheader()
-    counter = 1
+
+    if cache.cached_file_count(MAVEN_CSV_PATH) > 0:
+        projects, counter = cache.cache_file_content(MAVEN_CSV_PATH)
+        counter += 1
+    else:
+        # init
+        writer.writeheader()
+        counter = 1
+
+    # maven crawler
+    maven_crawler = Maven_Crawler(sleep=sleep)
 
     # star
     while len(projects) < count:
@@ -55,9 +62,8 @@ def build_projects(count, categories, min_maven_usage, sleep) -> {}:
 
                 if project_config not in projects.keys():
                     projects[project_config] = project_config
-
-            writer.writerow(tmp)
-            counter += 1
+                    writer.writerow(tmp)
+                    counter += 1
 
             if len(projects) == count:
                 break
@@ -65,4 +71,4 @@ def build_projects(count, categories, min_maven_usage, sleep) -> {}:
             time.sleep(sleep)
     file.close()
 
-    return
+    return projects

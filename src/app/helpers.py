@@ -17,12 +17,14 @@ from src.metrics import RunnerSM
 from src.metrics import RunnerCK
 
 
-def HelperAppGitHubSM(count, sleep, categories, min_maven_usage):
+def HelperAppGitHubSM(count, sleep, categories, min_maven_usage, versions):
     # init
     name: str = "AppGitHubSourceMeter"
 
     # config github
-    RepositoryConfigGitHub = RepositoryConfigGit(dbType=0, sleep=sleep)
+    RepositoryConfigGitHub = RepositoryConfigGit(
+        dbType=0, sleep=sleep, versions=versions
+    )
 
     # config app
     config_sm = AppConfigRepository(
@@ -31,7 +33,7 @@ def HelperAppGitHubSM(count, sleep, categories, min_maven_usage):
         metric_config=RunnerMetricConfigSM,
         repository=RepositoryGit,
         repository_config=RepositoryConfigGitHub,
-        projects_config=build_projects(count, categories, min_maven_usage),
+        projects_config=build_projects(count, categories, min_maven_usage, sleep),
     )
 
     # build app
@@ -41,12 +43,14 @@ def HelperAppGitHubSM(count, sleep, categories, min_maven_usage):
     return app
 
 
-def HelperAppGitHubCK(count, sleep, categories, min_maven_usage):
+def HelperAppGitHubCK(count, sleep, categories, min_maven_usage, versions):
     # init
     name: str = "AppGitHubCK"
 
     # config github
-    RepositoryConfigGitHub = RepositoryConfigGit(dbType=0, sleep=sleep)
+    RepositoryConfigGitHub = RepositoryConfigGit(
+        dbType=0, sleep=sleep, versions=versions
+    )
 
     # config app
     config_ck = AppConfigRepository(
@@ -55,7 +59,7 @@ def HelperAppGitHubCK(count, sleep, categories, min_maven_usage):
         metric_config=RunnerMetricConfigCK,
         repository=RepositoryGit,
         repository_config=RepositoryConfigGitHub,
-        projects_config=build_projects(count, categories, min_maven_usage),
+        projects_config=build_projects(count, categories, min_maven_usage, sleep),
     )
 
     # build app

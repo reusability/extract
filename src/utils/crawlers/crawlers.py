@@ -4,20 +4,24 @@ import re as regex
 import time
 
 EXCLUSION_LIST = [
-    "popular",
-    "open-source/testing-frameworks",
-    "open-source/json-libraries",
-    "open-source/core-utilities",
-    "open-source/mocking",
-    "open-source/web-assets",
+    # "popular",
+    # "open-source/testing-frameworks",
+    # "open-source/json-libraries",
+    # "open-source/core-utilities",
+    # "open-source/mocking",
+    # "open-source/web-assets",
 ]
 
 
 class Maven_Crawler:
     # class that crawls popular Maven projects.
-    def __init__(self):
+    def __init__(self, sleep, categories=None):
         self.base_url = "https://mvnrepository.com"
-        self.categories = self._get_categories()
+        self.sleep = sleep
+        if categories:
+            self.categories = categories
+        else:
+            self.categories = self._get_categories()
         self.number_categories = len(self.categories)
         self.page = 1
         self.current_category = 0
@@ -45,25 +49,27 @@ class Maven_Crawler:
                 path = category.find("a")["href"][1:]
                 if path not in EXCLUSION_LIST:
                     categories.append(path)
-                    print(path)
 
             curr_page += 1
-            time.sleep(5)
+            time.sleep(self.sleep)
 
     def _request_page(self):
-        # load page with current count (self.page)
-        page = requests.get(
-            "{}/{}?p={}".format(
-                self.base_url, self.categories[self.current_category], self.page
+        try:
+            # load page with current count (self.page)
+            page = requests.get(
+                "{}/{}?p={}".format(
+                    self.base_url, self.categories[self.current_category], self.page
+                )
             )
-        )
 
-        # load html page
-        html_page = BeautifulSoup(page.content, "html.parser")
+            # load html page
+            html_page = BeautifulSoup(page.content, "html.parser")
 
-        content = html_page.find("div", attrs={"id": "maincontent"})
-        # get all tags that stores projects info
-        projects = content.find_all("div", attrs={"class": "im"})
+            content = html_page.find("div", attrs={"id": "maincontent"})
+            # get all tags that stores projects info
+            projects = content.find_all("div", attrs={"class": "im"})
+        except:  # noqa : E722
+            projects = []
 
         return projects
 
@@ -178,7 +184,7 @@ class Maven_Crawler:
 
                 # for each matched result
                 for url in all_urls:
-                    # print(url)
+
                     # remove /tree/master
                     tree_master = regex.search("/tree/master", url)
                     if tree_master:
@@ -216,9 +222,18 @@ class Maven_Crawler:
                     if url[-1] == "/":
                         url = url[:-1]
                     last_part = url.split("/")[-1]
+                    project_name_check = project_name.split("/")[-1]
+
+                    # this when names are close to each other: eg: mongo-java-driver and mongo-scala-driver
+                    possible_match = 0
+                    for i in last_part.split("-"):
+                        if i in project_name_check.split("-"):
+                            possible_match += 1
 
                     # if last part of the url is same as organization name
-                    if last_part == org_name:
+                    if last_part in project_name_check or (
+                        possible_match / len(last_part.split("-")) > 0.5
+                    ):
                         check_start = regex.search("http", url)
                         if check_start:
                             url = url[check_start.start() :]  # noqa : E203

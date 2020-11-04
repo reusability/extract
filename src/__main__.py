@@ -64,9 +64,15 @@ import click
     "--sleep", default=2, help="time to sleep between fetches", type=click.INT
 )
 @click.option(
-    "--mavenusage", default=10, help="minimum maven usage to fetch", type=click.INT
+    "--mavenusage", default=50, help="minimum maven usage to fetch", type=click.INT
 )
-def main(metrics, count, sleep, mavenusage):
+@click.option(
+    "--versions",
+    default=1,
+    help="number of releases to be analysed for each project",
+    type=click.INT,
+)
+def main(metrics, count, sleep, mavenusage, versions):
     # init
     categories = [
         "popular",
@@ -76,7 +82,7 @@ def main(metrics, count, sleep, mavenusage):
     ]
 
     # init
-    app = build_app(metrics, count, sleep, categories, mavenusage)
+    app = build_app(metrics, count, sleep, categories, mavenusage, versions)
 
     # run
     app.Run()
@@ -85,12 +91,12 @@ def main(metrics, count, sleep, mavenusage):
     app.Stop()
 
 
-def build_app(metrics, count, sleep, categories, mavenusage):
+def build_app(metrics, count, sleep, categories, mavenusage, versions):
     # todo: clean up
     if metrics == "ck":
-        app = HelperAppGitHubCK(count, sleep, categories, mavenusage)
+        app = HelperAppGitHubCK(count, sleep, categories, mavenusage, versions)
     elif metrics == "sm":
-        app = HelperAppGitHubSM(count, sleep, categories, mavenusage)
+        app = HelperAppGitHubSM(count, sleep, categories, mavenusage, versions)
     else:
         raise ValueError("the metrics is not found")
 

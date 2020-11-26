@@ -1,5 +1,6 @@
 import csv
 import time
+import os
 
 from src.repository import ProjectConfig
 from src.utils import Maven_Crawler
@@ -13,7 +14,12 @@ def build_projects(count, categories, min_maven_usage, sleep) -> {}:
     projects: {str: ProjectConfig} = {}
 
     # open file
-    file = open(MAVEN_CSV_PATH, "a+")
+    try:
+        file = open(MAVEN_CSV_PATH, "a+")
+    except:  # noqa: E722
+        os.mkdir("outputs/etc/")
+        file = open(MAVEN_CSV_PATH, "a+")
+
     fieldnames = ["id", "maven", "usage", "github"]
     writer = csv.DictWriter(file, fieldnames=fieldnames)
 

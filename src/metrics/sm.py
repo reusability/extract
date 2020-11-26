@@ -43,5 +43,5 @@ class RunnerSM(Runner):
 
 
 RunnerMetricConfigSM = RunnerMetricConfig(
-    name="SM", metrics_runner_file="utils/jar/sm.jar", move_output=False
+    name="SM", metrics_runner_file="path/to/sm", move_output=False
 )

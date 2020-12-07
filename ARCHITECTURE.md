@@ -1,4 +1,6 @@
 ## Architecture
+This repostiory uses a layered architecture.
+
 -----------------------------
 -----      Crawler      -----
 -- crawls for github links --
@@ -32,4 +34,14 @@ For the Crawler, it could crawl for different types of **published artifacts** f
 - Maven (Java)
 - PyPi (Python)
 - NPM (JS and TS)
+
+## Extract
+TBD
+
+## Runner
+TBD
+
+## App
+TBD
+
 

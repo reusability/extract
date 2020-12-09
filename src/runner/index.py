@@ -1,7 +1,7 @@
 from typing import NamedTuple
 
 
-class RunnerMetricConfig(NamedTuple):
+class RunnerConfig(NamedTuple):
     name: str
     metrics_runner_file: str
     move_output: bool  # todo: remove this
@@ -10,7 +10,7 @@ class RunnerMetricConfig(NamedTuple):
 class Runner:
     output: str = None
 
-    def __init__(self, config: RunnerMetricConfig):
+    def __init__(self, config: RunnerConfig):
         self.config = config
 
     def Run(self, output_directory, move_output=False, output_source=None):

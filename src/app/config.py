@@ -2,21 +2,30 @@
 from dataclasses import dataclass
 
 # metrics
-from src.metrics import RunnerMetricConfig
-from src.metrics import Runner
+from src.runner import RunnerConfig
+from src.runner import Runner
 
 # repository
-from src.repository import Repository
-from src.repository import RepositoryConfig
-from src.repository import ProjectConfig
+from src.extract import Repository
+from src.extract import RepositoryConfig
+from src.extract import ProjectConfig
 
 # todo: encapsulate metric and repository config injection into their respective classes
 @dataclass
+class IRepositoryConfig:
+    type: Repository
+    config: RepositoryConfig
+
+@dataclass
+class IRunnerConfig:
+    type: Runner
+    config: RunnerConfig
+
+@dataclass
 class AppConfig:
     name: str
-    metric_config: RunnerMetricConfig
-    metric: Runner
-
+    metric: IRunnerConfig
+    repository: IRepositoryConfig
 
 @dataclass
 class AppConfigRepository(AppConfig):

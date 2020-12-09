@@ -2,9 +2,9 @@ import csv
 import time
 import os
 
-from src.repository import ProjectConfig
+from src.extract import ProjectConfig
 from src.utils import Maven_Crawler
-from src.repository.utils import cache
+from src.extract.utils import cache
 
 MAVEN_CSV_PATH = "outputs/etc/maven.csv"
 

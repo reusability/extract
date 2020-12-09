@@ -4,7 +4,7 @@ from src.utils import Subprocess
 from src.utils import copy_files
 
 # metrics.py
-from .index import RunnerMetricConfig
+from .index import RunnerConfig
 from .index import Runner
 
 """
@@ -13,7 +13,7 @@ SourceMeterJava -projectName=MyProject -projectBaseDir=MyProjectDir -resultsDir=
 
 
 class RunnerSM(Runner):
-    def __init__(self, config: RunnerMetricConfig):
+    def __init__(self, config: RunnerConfig):
         # init
         super().__init__(config)
 
@@ -42,6 +42,6 @@ class RunnerSM(Runner):
         copy_files(source=output_source + "*.csv", target=self.output)
 
 
-RunnerMetricConfigSM = RunnerMetricConfig(
+RunnerMetricConfigSM = RunnerConfig(
     name="SM", metrics_runner_file="path/to/sm", move_output=False
 )

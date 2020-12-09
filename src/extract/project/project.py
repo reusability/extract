@@ -3,8 +3,8 @@ from dataclasses import dataclass
 from pathlib import Path
 import pandas as pd
 
-from src.repository.utils.command import command_git_tag_checkout
-from src.repository.utils.preprocess import (
+from src.extract.utils.command import command_git_tag_checkout
+from src.extract.utils.preprocess import (
     preprocess_github_tags,
     preprocess_match_maven_tags,
     preprocess_maven_reuse,

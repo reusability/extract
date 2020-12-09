@@ -3,17 +3,10 @@ from bs4 import BeautifulSoup
 import re as regex
 import time
 
-EXCLUSION_LIST = [
-    # "popular",
-    # "open-source/testing-frameworks",
-    # "open-source/json-libraries",
-    # "open-source/core-utilities",
-    # "open-source/mocking",
-    # "open-source/web-assets",
-]
+from src.crawler.index import Crawler, EXCLUSION_LIST
 
 
-class Maven_Crawler:
+class MavenCrawler(Crawler):
     # class that crawls popular Maven projects.
     def __init__(self, sleep, categories=None):
         self.base_url = "https://mvnrepository.com"

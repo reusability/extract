@@ -1,6 +1,6 @@
 import csv
 import os
-from src.repository import ProjectConfig
+from src.extract import ProjectConfig
 
 
 def cached_file_count(path):

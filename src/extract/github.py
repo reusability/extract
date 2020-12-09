@@ -1,13 +1,13 @@
-from src.metrics import Runner
+from src.runner import Runner
 
-from src.repository.project.project import Project
+from src.extract.project.project import Project
 
 from .index import Repository
 from .index import RepositoryConfig
 from dataclasses import dataclass
 import time
 
-from src.repository.project.project import ProjectConfig
+from src.extract.project.project import ProjectConfig
 
 # utils
 from pathlib import Path

@@ -1,5 +1,5 @@
 # src.py
-from src.repository import RepositoryEnum
+from src.extract import RepositoryEnum
 
 # app.py
 from .config import AppConfig

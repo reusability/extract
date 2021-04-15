@@ -11,6 +11,7 @@ from .config import AppConfig
 
 # apps
 from .index import App
+from ..utils import Logger
 
 
 def HelperAppGitHubSM(count, sleep, categories, min_maven_usage, versions):
@@ -41,10 +42,15 @@ def HelperAppGitHubCK(count, sleep, categories, min_maven_usage, versions):
         dbType=0, sleep=sleep, versions=versions
     )
 
+    # logger
+    logger: Logger = Logger("AppCK")
+    logger.l.info("application started!")
+
     # config app
     app_config = AppConfig(
-        runner=RunnerCK(RunnerMetricConfigCK),
-        repository=RepositoryGit(RepositoryConfigGitHub),
+        logger=logger,
+        runner=RunnerCK(RunnerMetricConfigCK, logger),
+        repository=RepositoryGit(RepositoryConfigGitHub, logger),
     )
 
     # build app

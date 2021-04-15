@@ -1,6 +1,6 @@
 # general
 # utils.py
-from src.utils import Subprocess
+from src.utils import Subprocess, Logger
 from src.utils import copy_files
 
 # metrics.py
@@ -15,9 +15,11 @@ java -jar ck.jar /path/to/direction/<project>
 
 
 class RunnerCK(Runner):
-    def __init__(self, config: RunnerConfig):
+    def __init__(self, config: RunnerConfig, logger: Logger):
         # init
         super().__init__(config)
+        self.logger = logger
+        self.logger.l.info("successfully initiated ck runner")
 
     # variablesAndFields:False
     def Run(self, project_directory, move_output=False, output_source=None):

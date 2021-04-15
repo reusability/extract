@@ -2,6 +2,8 @@
 from enum import IntEnum
 from dataclasses import dataclass
 
+from src.runner import Runner
+
 
 @dataclass
 class RepositoryConfig:
@@ -19,3 +21,6 @@ class RepositoryEnum(IntEnum):
 class Repository:
     def __init__(self, config: RepositoryConfig):
         self.config = config
+
+    def Run(self, runner: Runner):
+        pass

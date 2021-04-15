@@ -1,30 +1,26 @@
 # src.py
-from src.repository import RepositoryEnum
+from src.repository import RepositoryEnum, Repository
 
 # utils.py
 from src.utils import Logger
 
 # app.py
 from .config import AppConfig
+from ..runner import Runner
 
 
 class App:
     def __init__(self, config: AppConfig):
         # config files
         self.config: AppConfig = config
-
-        # logger
-        self.logger: Logger = Logger(
-            "AppGitHub{runner_name}".format(runner_name=self.config.runner.config.name)
-        )
-        self.logger.l.info("application started!")
+        self.logger: Logger = config.logger
 
         # metrics
-        self.runner = self.config.runner
+        self.runner: Runner = self.config.runner
         self.logger.l.info("metrics init -> metrics_type: %s", self.runner.config.name)
 
         # init
-        self.repository = self.config.repository
+        self.repository: Repository = self.config.repository
         self.logger.l.info(
             "starting repository connection -> db_type: %s",
             RepositoryEnum.to_char(self.repository.config.dbType),
@@ -32,8 +28,8 @@ class App:
 
     def Run(self):
         # do stuff
-        self.logger.l.info("running application")
-        self.repository.do_stuff(self.runner)
+        self.logger.l.info("running repository iterator")
+        self.repository.Run(self.runner)
 
     def Stop(self):
         pass

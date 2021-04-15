@@ -1,9 +1,7 @@
 # helpers.py
 # repository
-from src.extract import RepositoryGit
-from src.extract.github import RepositoryConfigGit
-from src.runner import RunnerCK, RunnerSM
-from src.runner import RunnerMetricConfigCK
+from src.repository import RepositoryGit, RepositoryConfigGit
+from src.runner import RunnerCK, RunnerSM, RunnerMetricConfigCK
 
 # others
 from src.runner import RunnerMetricConfigSM

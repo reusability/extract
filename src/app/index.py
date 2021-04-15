@@ -1,5 +1,5 @@
 # src.py
-from src.extract import RepositoryEnum
+from src.repository import RepositoryEnum
 
 # utils.py
 from src.utils import Logger

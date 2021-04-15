@@ -1,10 +1,8 @@
 # general
 from dataclasses import dataclass
 
-from src.extract import Repository
-from src.extract import RepositoryConfig
-from src.runner import Runner
-from src.runner import RunnerConfig
+from src.repository import Repository, RepositoryConfig
+from src.runner import Runner, RunnerConfig
 
 
 # todo: encapsulate metric and repository config injection into their respective classes

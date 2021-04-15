@@ -1,6 +1,6 @@
 import re as regex
 from attr import dataclass
-from src.utils import crawl_maven_project
+from src.crawler import MavenCrawler
 from .command import command_git_tag, command_touch
 from src.utils import Subprocess
 import pandas as pd
@@ -63,7 +63,7 @@ def preprocess_match_maven_tags(name, output_directory, releases, tags):
 
 def preprocess_maven_reuse(name, output_directory, maven):
     # TODO move to Crawler repo
-    data = crawl_maven_project(maven)
+    data = MavenCrawler(maven)
     # write the data to .csv file
     data_frame = {"release": [], "usage": [], "date": []}
     for key, value in data.items():

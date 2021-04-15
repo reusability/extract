@@ -3,7 +3,7 @@ import time
 import os
 
 from src.extract import ProjectConfig
-from src.utils import Maven_Crawler
+from src.crawler import MavenCrawler
 from src.extract.utils import cache
 
 MAVEN_CSV_PATH = "outputs/etc/maven.csv"
@@ -32,7 +32,7 @@ def build_projects(count, categories, min_maven_usage, sleep) -> {}:
         counter = 1
 
     # maven crawler
-    maven_crawler = Maven_Crawler(sleep=sleep)
+    maven_crawler = MavenCrawler(sleep=sleep)
 
     # star
     while len(projects) < count:

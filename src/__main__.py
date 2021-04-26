@@ -1,8 +1,10 @@
 # __main__.py
 # from src.app.helpers import AppBigQueryStorage
+import click
+
 from src.app import HelperAppGitHubCK
 from src.app import HelperAppGitHubSM
-import click
+
 
 # todos
 # pre-mining -- branch: feature/mining
@@ -55,8 +57,13 @@ import click
 #   - GHTorrent
 # - automate yaml config pipeline
 #   - fetch projects from maven based on reuse
-
-
+#
+# s = requests.Session()
+# cookies = dict(cookies_are='working')
+# res = s.get('https://mvnrepository.com/', cookies=cookies)
+# print(res)
+#
+# https://repo.maven.apache.org/maven2/
 @click.command()
 @click.option("--metrics", default="ck", help="ck metrics or sourcemeter; ck or sm")
 @click.option("--count", default=5, help="number of projects to fetch", type=click.INT)
@@ -81,8 +88,19 @@ def main(metrics, count, sleep, mavenusage, versions):
         "open-source/mocking",
     ]
 
-    # init
-    app = build_app(metrics, count, sleep, categories, mavenusage, versions)
+    # create
+    config = {
+        "categories": categories,
+        "count": count,
+        "sleep": sleep,
+        "min_maven_usage": mavenusage,
+        "min_version_count": versions,
+    }
+
+    app = build_app(metrics, config)
+
+    # preprocess
+    app.Pre()
 
     # run
     app.Run()
@@ -91,12 +109,12 @@ def main(metrics, count, sleep, mavenusage, versions):
     app.Stop()
 
 
-def build_app(metrics, count, sleep, categories, mavenusage, versions):
+def build_app(metrics, config):
     # todo: clean up
     if metrics == "ck":
-        app = HelperAppGitHubCK(count, sleep, categories, mavenusage, versions)
+        app = HelperAppGitHubCK(config)
     elif metrics == "sm":
-        app = HelperAppGitHubSM(count, sleep, categories, mavenusage, versions)
+        app = HelperAppGitHubSM(config)
     else:
         raise ValueError("the metrics is not found")
 

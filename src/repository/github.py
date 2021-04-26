@@ -37,7 +37,7 @@ class RepositoryGit(Repository):
     def is_runnable(self):
         return len(self.projects) != 0
 
-    def Run(self, runner: Runner):
+    def Run(self, runner: Runner, projects):
         if not self.is_runnable():
             self.logger.l.error("no projects to iterate")
 

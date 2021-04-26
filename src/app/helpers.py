@@ -14,13 +14,13 @@ from .index import App
 from ..utils import Logger
 
 
-def HelperAppGitHubSM(count, sleep, categories, min_maven_usage, versions):
+def HelperAppGitHubSM(config):
     # init
     # name: str = "AppGitHubSourceMeter"
 
     # config github
     RepositoryConfigGitHub = RepositoryConfigGit(
-        dbType=0, sleep=sleep, versions=versions
+        dbType=0, sleep=config["sleep"], versions=config["versions"]
     )
 
     # config app
@@ -36,10 +36,10 @@ def HelperAppGitHubSM(count, sleep, categories, min_maven_usage, versions):
     return app
 
 
-def HelperAppGitHubCK(count, sleep, categories, min_maven_usage, versions):
+def HelperAppGitHubCK(config):
     # config github
     RepositoryConfigGitHub = RepositoryConfigGit(
-        dbType=0, sleep=sleep, versions=versions
+        dbType=0, sleep=config["sleep"], versions=config["min_version_count"]
     )
 
     # logger
@@ -54,7 +54,7 @@ def HelperAppGitHubCK(count, sleep, categories, min_maven_usage, versions):
     )
 
     # build app
-    app = App(app_config)
+    app = App(app_config, config)
 
     # return
     return app

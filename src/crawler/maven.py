@@ -1,16 +1,20 @@
-import requests
-from bs4 import BeautifulSoup
 import re as regex
 import time
 
+import requests
+from bs4 import BeautifulSoup
+
 from src.crawler.index import Crawler, EXCLUSION_LIST
+from src.utils import Logger
 
 
 class MavenCrawler(Crawler):
     # class that crawls popular Maven projects.
-    def __init__(self, sleep, categories=None):
+    def __init__(self, sleep, logger: Logger, categories=None):
+        super().__init__()
         self.base_url = "https://mvnrepository.com"
         self.sleep = sleep
+        self.logger = logger
         if categories:
             self.categories = categories
         else:
@@ -32,6 +36,8 @@ class MavenCrawler(Crawler):
 
             html_page = BeautifulSoup(page.content, "html.parser")
             content = html_page.find("div", attrs={"id": "maincontent"})
+
+            # print(html_page)
 
             list_categories = content.find_all("h4")
 

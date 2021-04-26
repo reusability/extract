@@ -32,7 +32,7 @@ def build_projects(count, categories, min_maven_usage, sleep) -> {}:
         counter = 1
 
     # maven crawler
-    maven_crawler = MavenCrawler(sleep=sleep)
+    maven_crawler = MavenCrawler(sleep=sleep, logger=None)
 
     # star
     while len(projects) < count:

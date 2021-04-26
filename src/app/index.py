@@ -15,6 +15,7 @@ class App:
         self.config: AppConfig = config
         self.logger: Logger = config.logger
         self.n = n
+        self.projects = None
 
         # metrics
         self.runner: Runner = self.config.runner

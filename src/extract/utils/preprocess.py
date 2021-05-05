@@ -1,9 +1,11 @@
 import re as regex
-from attr import dataclass
-from src.utils import crawl_maven_project
-from .command import command_git_tag, command_touch
-from src.utils import Subprocess
+
 import pandas as pd
+from attr import dataclass
+
+from src.crawler import crawl_maven_project
+from src.utils import Subprocess
+from .command import command_git_tag, command_touch
 
 # config
 FILENAME_TAGS = "_tags.txt"

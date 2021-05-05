@@ -1,17 +1,15 @@
-from src.metrics import Runner
-
-from src.repository.project.project import Project
-
-from .index import Repository
-from .index import RepositoryConfig
-from dataclasses import dataclass
 import time
-
-from src.repository.project.project import ProjectConfig
+from dataclasses import dataclass
 
 # utils
 from pathlib import Path
-from ..utils import remove_dir
+
+from src.extract.project.project import Project
+from src.extract.project.project import ProjectConfig
+from src.runner import Runner
+from .index import Repository
+from .index import RepositoryConfig
+from ..utils import remove_dir, Logger
 
 
 @dataclass
@@ -21,19 +19,24 @@ class RepositoryConfigGit(RepositoryConfig):
 
 
 class RepositoryGit(Repository):
-    def __init__(self, config: RepositoryConfigGit):
+    def __init__(self, config: RepositoryConfigGit, logger: Logger):
         super().__init__(config)
+        self.logger = logger
+        self.logger.l.info("successfully initiated git connection")
 
         # init
-        self.projects: [Project] = None
+        self.projects: [Project] = []
 
-    def set_projects(self, project_configs: {str: ProjectConfig}):
+    def Pre(self, project_configs: {str: ProjectConfig}):
+        self.logger.l.info("setting projects in format: (name, maven_url, github_url)")
         self.projects = [
             Project(item.name, item.maven, item.github)
             for key, item in project_configs.items()
         ]
 
-    def do_stuff(self, runner: Runner):
+    def Run(self, runner: Runner):
+        if not len(self.projects) != 0:
+            self.logger.l.error("no projects to iterate")
 
         for project in self.projects:
             # clone

@@ -8,4 +8,3 @@ from src.utils.etc.subprocess import remove_dir  # noqa: F401
 
 from src.utils.data.parse import parse_dataset  # noqa: F401
 from src.utils.data.zip_outputs import Zip_Folder  # noqa: F401
-from src.utils.crawlers.crawlers import crawl_maven_project, Maven_Crawler  # noqa: F401

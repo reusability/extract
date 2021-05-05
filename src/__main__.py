@@ -1,8 +1,13 @@
 # __main__.py
 # from src.app.helpers import AppBigQueryStorage
+import click
+# import requests
+# from bs4 import BeautifulSoup
+# from selenium import webdriver
+
 from src.app import HelperAppGitHubCK
 from src.app import HelperAppGitHubSM
-import click
+
 
 # todos
 # pre-mining -- branch: feature/mining
@@ -55,8 +60,24 @@ import click
 #   - GHTorrent
 # - automate yaml config pipeline
 #   - fetch projects from maven based on reuse
+#
 
+# Request -- Has Cookies but doesn't bypass CAPTCHA
+# s = requests.Session()
+# cookies = dict(cookies_are='working')
+# s.headers.update({
+#     'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36',
+#     'referer': 'https://www.google.com/'
+# })
+# res = s.get('https://mvnrepository.com/popular', cookies=cookies)
+# print(res.content)
 
+# WebDriver -- Bypasses CAPTCHA issues
+# dr = webdriver.Chrome("/Users/jpil8/Downloads/chromedriver")
+# dr.get("https://mvnrepository.com/popular")
+# html_page = BeautifulSoup(dr.page_source, "html.parser")
+#
+# https://repo.maven.apache.org/maven2/
 @click.command()
 @click.option("--metrics", default="ck", help="ck metrics or sourcemeter; ck or sm")
 @click.option("--count", default=5, help="number of projects to fetch", type=click.INT)
@@ -73,6 +94,21 @@ import click
     type=click.INT,
 )
 def main(metrics, count, sleep, mavenusage, versions):
+    # dr = webdriver.Chrome("/Users/jpil8/Downloads/chromedriver")
+    # dr.get("https://mvnrepository.com/popular")
+    # bs = BeautifulSoup(dr.page_source, "lxml")
+    # print(bs)
+    # s = requests.Session()
+    # res = s.get("https://mvnrepository.com/")
+
+    # cookies = dict(res.cookies)
+    # s.headers.update({
+    #     'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36',
+    #     'referer': 'https://www.google.com/'
+    # })
+    # res2 = s.get('https://mvnrepository.com/popular', cookies=cookies)
+    # print(res2.content)
+
     # init
     categories = [
         "popular",
@@ -81,8 +117,19 @@ def main(metrics, count, sleep, mavenusage, versions):
         "open-source/mocking",
     ]
 
-    # init
-    app = build_app(metrics, count, sleep, categories, mavenusage, versions)
+    # create
+    config = {
+        "categories": categories,
+        "count": count,
+        "sleep": sleep,
+        "min_maven_usage": mavenusage,
+        "min_version_count": versions,
+    }
+
+    app = build_app(metrics, config)
+
+    # preprocess
+    app.Pre()
 
     # run
     app.Run()
@@ -91,12 +138,12 @@ def main(metrics, count, sleep, mavenusage, versions):
     app.Stop()
 
 
-def build_app(metrics, count, sleep, categories, mavenusage, versions):
+def build_app(metrics, config):
     # todo: clean up
     if metrics == "ck":
-        app = HelperAppGitHubCK(count, sleep, categories, mavenusage, versions)
+        app = HelperAppGitHubCK(config)
     elif metrics == "sm":
-        app = HelperAppGitHubSM(count, sleep, categories, mavenusage, versions)
+        app = HelperAppGitHubSM(config)
     else:
         raise ValueError("the metrics is not found")
 

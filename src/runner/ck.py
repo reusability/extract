@@ -1,10 +1,10 @@
 # general
 # utils.py
-from src.utils import Subprocess
+from src.utils import Subprocess, Logger
 from src.utils import copy_files
 
 # metrics.py
-from .index import RunnerMetricConfig, Runner
+from .index import RunnerConfig, Runner
 
 """
 This function implements the CK runner.
@@ -15,9 +15,11 @@ java -jar ck.jar /path/to/direction/<project>
 
 
 class RunnerCK(Runner):
-    def __init__(self, config: RunnerMetricConfig):
+    def __init__(self, config: RunnerConfig, logger: Logger):
         # init
         super().__init__(config)
+        self.logger = logger
+        self.logger.l.info("successfully initiated ck runner")
 
     # variablesAndFields:False
     def Run(self, project_directory, move_output=False, output_source=None):
@@ -44,6 +46,6 @@ class RunnerCK(Runner):
         copy_files(source=output_source + "*.csv", target=self.get_output())
 
 
-RunnerMetricConfigCK = RunnerMetricConfig(
+RunnerMetricConfigCK = RunnerConfig(
     name="CK", metrics_runner_file="utils/jar/ck.jar", move_output=True
 )

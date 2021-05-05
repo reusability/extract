@@ -1,69 +1,60 @@
 # helpers.py
 # repository
-from src.repository import RepositoryGit
-from src.repository.github import RepositoryConfigGit
-from src.repository.project.build import build_projects
-
-# config
-from .config import AppConfigRepository
-
-# apps
-from .index import AppGitHub
+from src.repository import RepositoryGit, RepositoryConfigGit
+from src.runner import RunnerCK, RunnerSM, RunnerMetricConfigCK
 
 # others
-from src.metrics import RunnerMetricConfigSM
-from src.metrics import RunnerMetricConfigCK
-from src.metrics import RunnerSM
-from src.metrics import RunnerCK
+from src.runner import RunnerMetricConfigSM
+
+# config
+from .config import AppConfig
+
+# apps
+from .index import App
+from ..utils import Logger
 
 
-def HelperAppGitHubSM(count, sleep, categories, min_maven_usage, versions):
+def HelperAppGitHubSM(config):
     # init
-    name: str = "AppGitHubSourceMeter"
+    # name: str = "AppGitHubSourceMeter"
 
     # config github
     RepositoryConfigGitHub = RepositoryConfigGit(
-        dbType=0, sleep=sleep, versions=versions
+        dbType=0, sleep=config["sleep"], versions=config["versions"]
     )
 
     # config app
-    config_sm = AppConfigRepository(
-        name=name,
-        metric=RunnerSM,
-        metric_config=RunnerMetricConfigSM,
-        repository=RepositoryGit,
-        repository_config=RepositoryConfigGitHub,
-        projects_config=build_projects(count, categories, min_maven_usage, sleep),
+    app_config = AppConfig(
+        runner=RunnerSM(RunnerMetricConfigSM),
+        repository=RepositoryGit(RepositoryConfigGitHub),
     )
 
     # build app
-    app = AppGitHub(config_sm)
+    app = App(app_config)
 
     # return
     return app
 
 
-def HelperAppGitHubCK(count, sleep, categories, min_maven_usage, versions):
-    # init
-    name: str = "AppGitHubCK"
-
+def HelperAppGitHubCK(config):
     # config github
     RepositoryConfigGitHub = RepositoryConfigGit(
-        dbType=0, sleep=sleep, versions=versions
+        dbType=0, sleep=config["sleep"], versions=config["min_version_count"]
     )
 
+    # logger
+    logger: Logger = Logger("AppCK")
+    logger.l.info("application started!")
+
     # config app
-    config_ck = AppConfigRepository(
-        name=name,
-        metric=RunnerCK,
-        metric_config=RunnerMetricConfigCK,
-        repository=RepositoryGit,
-        repository_config=RepositoryConfigGitHub,
-        projects_config=build_projects(count, categories, min_maven_usage, sleep),
+    app_config = AppConfig(
+        logger=logger,
+        runner=RunnerCK(RunnerMetricConfigCK, logger),
+        repository=RepositoryGit(RepositoryConfigGitHub, logger),
     )
 
     # build app
-    app = AppGitHub(config_ck)
+    app = App(app_config, config)
 
     # return
     return app

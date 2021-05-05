@@ -1,6 +1,9 @@
 # __main__.py
 # from src.app.helpers import AppBigQueryStorage
 import click
+# import requests
+# from bs4 import BeautifulSoup
+# from selenium import webdriver
 
 from src.app import HelperAppGitHubCK
 from src.app import HelperAppGitHubSM
@@ -58,10 +61,21 @@ from src.app import HelperAppGitHubSM
 # - automate yaml config pipeline
 #   - fetch projects from maven based on reuse
 #
+
+# Request -- Has Cookies but doesn't bypass CAPTCHA
 # s = requests.Session()
 # cookies = dict(cookies_are='working')
-# res = s.get('https://mvnrepository.com/', cookies=cookies)
-# print(res)
+# s.headers.update({
+#     'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36',
+#     'referer': 'https://www.google.com/'
+# })
+# res = s.get('https://mvnrepository.com/popular', cookies=cookies)
+# print(res.content)
+
+# WebDriver -- Bypasses CAPTCHA issues
+# dr = webdriver.Chrome("/Users/jpil8/Downloads/chromedriver")
+# dr.get("https://mvnrepository.com/popular")
+# html_page = BeautifulSoup(dr.page_source, "html.parser")
 #
 # https://repo.maven.apache.org/maven2/
 @click.command()
@@ -80,6 +94,21 @@ from src.app import HelperAppGitHubSM
     type=click.INT,
 )
 def main(metrics, count, sleep, mavenusage, versions):
+    # dr = webdriver.Chrome("/Users/jpil8/Downloads/chromedriver")
+    # dr.get("https://mvnrepository.com/popular")
+    # bs = BeautifulSoup(dr.page_source, "lxml")
+    # print(bs)
+    # s = requests.Session()
+    # res = s.get("https://mvnrepository.com/")
+
+    # cookies = dict(res.cookies)
+    # s.headers.update({
+    #     'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36',
+    #     'referer': 'https://www.google.com/'
+    # })
+    # res2 = s.get('https://mvnrepository.com/popular', cookies=cookies)
+    # print(res2.content)
+
     # init
     categories = [
         "popular",

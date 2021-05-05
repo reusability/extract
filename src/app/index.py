@@ -32,15 +32,16 @@ class App:
         # initialize projects
         self.logger.l.info("initialising project config")
         self.projects = build_projects(
-            self.n["count"],
+            int(self.n["count"]),
             self.n["categories"],
-            self.n["min_maven_usage"],
-            self.n["sleep"],
+            int(self.n["min_maven_usage"]),
+            int(self.n["sleep"]),
         )
 
     def Run(self):
         # do stuff
         self.logger.l.info("running repository iterator")
+        self.repository.Pre(self.projects)
         self.repository.Run(self.runner)
 
     def Stop(self):

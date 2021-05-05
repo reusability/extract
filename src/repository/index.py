@@ -1,8 +1,10 @@
 # index.py
-from enum import IntEnum
 from dataclasses import dataclass
+from enum import IntEnum
 
+from src.extract import ProjectConfig
 from src.runner import Runner
+from src.utils import Logger
 
 
 @dataclass
@@ -19,8 +21,12 @@ class RepositoryEnum(IntEnum):
 
 
 class Repository:
-    def __init__(self, config: RepositoryConfig):
+    def __init__(self, config: RepositoryConfig, logger: Logger = None):
         self.config = config
+        self.logger = logger
+
+    def Pre(self, project_configs: {str: ProjectConfig}):
+        pass
 
     def Run(self, runner: Runner):
         pass

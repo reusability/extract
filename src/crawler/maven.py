@@ -10,7 +10,7 @@ from src.utils import Logger
 
 class MavenCrawler(Crawler):
     # class that crawls popular Maven projects.
-    def __init__(self, sleep, logger: Logger, categories=None):
+    def __init__(self, sleep=2, logger: Logger = None, categories=None):
         super().__init__()
         self.base_url = "https://mvnrepository.com"
         self.sleep = sleep
